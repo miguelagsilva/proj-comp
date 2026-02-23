@@ -18,9 +18,14 @@ int column = 1;
 
 /* Define token patterns */
 empty      [ \t]
-letter     [a-zA-Z]
+letter     [a-zA-Z_$]
 digit      [0-9]
+not_zero   [1-9]
 stringlit   ([^\\\"\n\r]|\\[fnrt\\\"])*
+
+/* Decimal Macros */
+seq_digits {digit}(({digit}|_)*{digit})?
+exponent ([eE][+-]?{seq_digits})
 
 %X COMMENT
 
@@ -43,8 +48,14 @@ stringlit   ([^\\\"\n\r]|\\[fnrt\\\"])*
 "then"                  { printf("THEN\n"); }
 "else"                  { printf("ELSE\n"); }
 
-{digit}+                { printf("NATURAL(%s)\n", yytext); }
-{digit}*"."{digit}+     { printf("DECIMAL(%s)\n", yytext); }
+0|({not_zero}(({digit}|"_")*{digit})?)               { printf("NATURAL(%s)\n", yytext); } /* 1____010 aceita? */
+
+
+{seq_digits}"."{seq_digits}?{exponent}? |
+"."{seq_digits}{exponent}?               |
+{seq_digits}{exponent}               { printf("DECIMAL(%s)\n", yytext); }
+
+
 {letter}({letter}|{digit})*        { printf("IDENTIFIER(%s)\n", yytext); }
 
 
@@ -55,7 +66,7 @@ stringlit   ([^\\\"\n\r]|\\[fnrt\\\"])*
       char c = yytext[i+1];
       if (!(c=='f' || c=='n' || c=='r' || c=='t' || c=='\\' || c=='"')) {
         int pos = start_column + i;
-        printf("Line %d, column %d: invalid escape sequence (\\%c)\n", line, pos, c);
+        printf("Line %d, col %d: invalid escape sequence (\\%c)\n", line, pos, c);
         break;
       }
       i++;
@@ -69,7 +80,7 @@ stringlit   ([^\\\"\n\r]|\\[fnrt\\\"])*
 <COMMENT>\n             { printf(" "); }
 <COMMENT>"*/"           { BEGIN(INITIAL); }
 
-.                       { printf("Line %d, column %d: unrecognized character (%s)\n", line, column-yyleng, yytext);  }
+.                       { printf("Line %d, col %d: unrecognized character (%s)\n", line, column-yyleng, yytext);  }
 
 %%
 extern char *yytext;  /* the matched text */
