@@ -1,4 +1,4 @@
-all: build test
+all: clean build test
 
 build:
 	lex jucompiler.l
