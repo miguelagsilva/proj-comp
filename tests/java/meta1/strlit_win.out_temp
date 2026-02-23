@@ -1,17 +1,0 @@
-Line 1, column 1: unrecognized character (")
-IDENTIFIER(isto)
-Line 1, column 7: unrecognized character (Ã)
-Line 1, column 8: unrecognized character (©)
-IDENTIFIER(uma)
-IDENTIFIER(frase)
-Line 1, column 19: unrecognized character ()
-Line 2, column 2: unrecognized character (")
-IDENTIFIER(isto)
-Line 2, column 8: unrecognized character (Ã)
-Line 2, column 9: unrecognized character (©)
-IDENTIFIER(outra)
-IDENTIFIER(frase)
-Line 2, column 23: unrecognized character (\)
-Line 2, column 24: unrecognized character ()
-Line 3, column 4: invalid escape sequence (\g)
-Line 3, column 9: unrecognized character ()

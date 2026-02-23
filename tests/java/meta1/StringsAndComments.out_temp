@@ -1,36 +1,0 @@
-STRLIT("Esta e uma string valida")
-Line 1, column 27: unrecognized character ()
-Line 2, column 1: unrecognized character (")
-IDENTIFIER(esta)
-IDENTIFIER(nao)
-Line 2, column 10: unrecognized character ()
-IDENTIFIER(class)
-IDENTIFIER(Main)
-Line 3, column 12: unrecognized character ({)
-Line 3, column 13: unrecognized character ()
-Line 4, column 2: unrecognized character (")
-IDENTIFIER(esta)
-IDENTIFIER(tambem)
-IDENTIFIER(nao)
-Line 4, column 18: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(int)
-IDENTIFIER(soma)
-(
-IDENTIFIER(int)
-IDENTIFIER(n)
-)
-Line 5, column 32: unrecognized character ({)
-Line 5, column 33: unrecognized character ()
-Line 6, column 2: unrecognized character (?)
-Line 6, column 3: unrecognized character (#)
-caracteres ilegaisLine 6, column 27: unrecognized character ()
-algumas mudancas de linha com \rLine 7, column 38: unrecognized character ()
-Line 7, column 39: unrecognized character ()
-Line 7, column 40: unrecognized character (")
-IDENTIFIER(Mais)
-IDENTIFIER(uma)
-IDENTIFIER(string)
-IDENTIFIER(incompleta)
-Comentario sem fim

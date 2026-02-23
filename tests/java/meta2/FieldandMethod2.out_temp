@@ -1,85 +1,0 @@
-IDENTIFIER(class)
-IDENTIFIER(Factorial)
-Line 1, column 17: unrecognized character ({)
-Line 1, column 18: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(boolean)
-IDENTIFIER(b)
-Line 2, column 24: unrecognized character (;)
-Line 2, column 25: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(int)
-IDENTIFIER(factorial)
-(
-IDENTIFIER(int)
-IDENTIFIER(a)
-,
-IDENTIFIER(int)
-IDENTIFIER(b)
-,
-IDENTIFIER(int)
-IDENTIFIER(c)
-,
-IDENTIFIER(int)
-IDENTIFIER(d)
-)
-Line 3, column 57: unrecognized character ({)
-Line 3, column 58: unrecognized character ()
-Line 4, column 2: unrecognized character (})
-Line 4, column 3: unrecognized character (;)
-Line 4, column 4: unrecognized character (;)
-Line 4, column 5: unrecognized character (;)
-Line 4, column 6: unrecognized character (;)
-Line 4, column 7: unrecognized character (;)
-Line 4, column 8: unrecognized character (;)
-Line 4, column 9: unrecognized character (;)
-Line 4, column 10: unrecognized character (;)
-Line 4, column 11: unrecognized character (;)
-Line 4, column 12: unrecognized character (;)
-Line 4, column 13: unrecognized character ()
-Line 5, column 1: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(void)
-IDENTIFIER(main)
-(
-IDENTIFIER(String)
-Line 6, column 32: unrecognized character ([)
-Line 6, column 33: unrecognized character (])
-IDENTIFIER(args)
-)
-Line 6, column 41: unrecognized character ({)
-Line 6, column 42: unrecognized character ()
-IDENTIFIER(int)
-IDENTIFIER(argument)
-,
-IDENTIFIER(teste)
-Line 7, column 21: unrecognized character (;)
-Line 7, column 22: unrecognized character ()
-IDENTIFIER(int)
-IDENTIFIER(n)
-Line 8, column 8: unrecognized character (;)
-Line 8, column 9: unrecognized character ()
-Line 9, column 2: unrecognized character (})
-Line 9, column 3: unrecognized character (;)
-Line 9, column 4: unrecognized character (;)
-Line 9, column 5: unrecognized character (;)
-Line 9, column 6: unrecognized character (;)
-Line 9, column 7: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-DOUBLE
-IDENTIFIER(ole)
-(
-IDENTIFIER(int)
-IDENTIFIER(n)
-)
-Line 10, column 34: unrecognized character ({)
-Line 10, column 35: unrecognized character ()
-Line 11, column 3: unrecognized character ()
-Line 12, column 2: unrecognized character (})
-Line 12, column 3: unrecognized character ()
-Line 13, column 1: unrecognized character (})
-Line 13, column 2: unrecognized character ()

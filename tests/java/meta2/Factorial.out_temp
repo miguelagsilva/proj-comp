@@ -1,86 +1,0 @@
-IDENTIFIER(class)
-IDENTIFIER(Factorial)
-Line 1, column 17: unrecognized character ({)
-Line 1, column 18: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(int)
-IDENTIFIER(factorial)
-(
-IDENTIFIER(int)
-IDENTIFIER(n)
-)
-Line 2, column 40: unrecognized character ({)
-Line 2, column 41: unrecognized character ()
-IF
-(
-IDENTIFIER(n)
-=
-=
-NATURAL(0)
-)
-Line 3, column 20: unrecognized character ()
-IDENTIFIER(return)
-NATURAL(1)
-Line 4, column 21: unrecognized character (;)
-Line 4, column 22: unrecognized character ()
-IDENTIFIER(return)
-IDENTIFIER(n)
-*
-IDENTIFIER(factorial)
-(
-IDENTIFIER(n)
--
-NATURAL(1)
-)
-Line 5, column 34: unrecognized character (;)
-Line 5, column 35: unrecognized character ()
-Line 6, column 5: unrecognized character (})
-Line 6, column 6: unrecognized character ()
-Line 7, column 1: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(void)
-IDENTIFIER(main)
-(
-IDENTIFIER(String)
-Line 8, column 35: unrecognized character ([)
-Line 8, column 36: unrecognized character (])
-IDENTIFIER(args)
-)
-Line 8, column 44: unrecognized character ({)
-Line 8, column 45: unrecognized character ()
-IDENTIFIER(int)
-IDENTIFIER(argument)
-Line 9, column 21: unrecognized character (;)
-Line 9, column 22: unrecognized character ()
-IDENTIFIER(argument)
-=
-IDENTIFIER(Integer)
-Line 10, column 27: unrecognized character (.)
-IDENTIFIER(parseInt)
-(
-IDENTIFIER(args)
-Line 10, column 41: unrecognized character ([)
-NATURAL(0)
-Line 10, column 43: unrecognized character (])
-)
-Line 10, column 45: unrecognized character (;)
-Line 10, column 46: unrecognized character ()
-IDENTIFIER(System)
-Line 11, column 15: unrecognized character (.)
-IDENTIFIER(out)
-Line 11, column 19: unrecognized character (.)
-IDENTIFIER(print)
-(
-IDENTIFIER(factorial)
-(
-IDENTIFIER(argument)
-)
-)
-Line 11, column 46: unrecognized character (;)
-Line 11, column 47: unrecognized character ()
-Line 12, column 5: unrecognized character (})
-Line 12, column 6: unrecognized character ()
-Line 13, column 1: unrecognized character (})
-Line 13, column 2: unrecognized character ()

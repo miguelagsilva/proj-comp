@@ -1,133 +1,0 @@
-IDENTIFIER(class)
-IDENTIFIER(Main)
-Line 1, column 12: unrecognized character ({)
-Line 1, column 13: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(int)
-IDENTIFIER(test1)
-(
-IDENTIFIER(int)
-IDENTIFIER(a)
-,
-DOUBLE
-IDENTIFIER(c)
-)
-Line 2, column 45: unrecognized character ()
-Line 3, column 5: unrecognized character ({)
-Line 3, column 6: unrecognized character ()
-IDENTIFIER(a)
-=
-IDENTIFIER(c)
-+
-NATURAL(3)
-*
-NATURAL(8)
-Line 4, column 20: unrecognized character (>)
-Line 4, column 21: unrecognized character (>)
-NATURAL(4)
--
-NATURAL(2)
-+
-(
-NATURAL(5)
-+
-IDENTIFIER(c)
-)
-Line 4, column 36: unrecognized character (%)
-NATURAL(10)
-Line 4, column 40: unrecognized character (%)
-NATURAL(3)
-Line 4, column 43: unrecognized character (;)
-Line 4, column 44: unrecognized character ()
-IDENTIFIER(int)
-IDENTIFIER(k)
-,
-IDENTIFIER(d)
-,
-IDENTIFIER(a)
-Line 5, column 17: unrecognized character (;)
-Line 5, column 18: unrecognized character ()
-Line 6, column 5: unrecognized character (})
-Line 6, column 6: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(int)
-IDENTIFIER(test2)
-(
-)
-Line 7, column 30: unrecognized character ()
-Line 8, column 5: unrecognized character ({)
-Line 8, column 6: unrecognized character ()
-Line 9, column 1: unrecognized character ()
-Line 10, column 5: unrecognized character (})
-Line 10, column 6: unrecognized character ()
-IDENTIFIER(public)
-IDENTIFIER(static)
-IDENTIFIER(int)
-IDENTIFIER(test3)
-(
-IDENTIFIER(String)
-Line 11, column 35: unrecognized character ([)
-Line 11, column 36: unrecognized character (])
-IDENTIFIER(args)
-)
-Line 11, column 43: unrecognized character ()
-Line 12, column 5: unrecognized character ({)
-Line 12, column 6: unrecognized character ()
-IF
-(
-IDENTIFIER(a)
-)
-Line 13, column 11: unrecognized character (;)
-Line 13, column 12: unrecognized character ()
-IDENTIFIER(while)
-(
-IDENTIFIER(b)
-)
-Line 14, column 14: unrecognized character (;)
-Line 14, column 15: unrecognized character ()
-IF
-(
-IDENTIFIER(a)
-)
-Line 15, column 11: unrecognized character ({)
-Line 15, column 12: unrecognized character ()
-Line 16, column 1: unrecognized character ()
-Line 17, column 6: unrecognized character (})
-ELSE
-Line 17, column 12: unrecognized character ()
-Line 18, column 6: unrecognized character ({)
-Line 18, column 7: unrecognized character ()
-IDENTIFIER(p)
-=
-IDENTIFIER(test1)
-(
-IDENTIFIER(Integer)
-Line 19, column 24: unrecognized character (.)
-IDENTIFIER(parseInt)
-(
-IDENTIFIER(args)
-Line 19, column 38: unrecognized character ([)
-NATURAL(0)
-Line 19, column 40: unrecognized character (])
-)
-,
-IDENTIFIER(Integer)
-Line 19, column 51: unrecognized character (.)
-IDENTIFIER(parseInt)
-(
-IDENTIFIER(args)
-Line 19, column 65: unrecognized character ([)
-NATURAL(1)
-Line 19, column 67: unrecognized character (])
-)
-)
-Line 19, column 70: unrecognized character (;)
-Line 19, column 71: unrecognized character ()
-Line 20, column 6: unrecognized character (})
-Line 20, column 7: unrecognized character ()
-Line 21, column 5: unrecognized character (})
-Line 21, column 6: unrecognized character ()
-Line 22, column 1: unrecognized character (})
-Line 22, column 2: unrecognized character ()

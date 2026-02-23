@@ -56,3 +56,4 @@ dkms.conf
 # Generated files
 lex.yy.c
 jucompiler
+*.out_temp
