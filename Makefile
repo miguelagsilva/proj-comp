@@ -10,3 +10,4 @@ test:
 
 clean:
 	rm -f lex.yy.c jucompiler
+	rm -rf tests/java/**/*.out_temp
