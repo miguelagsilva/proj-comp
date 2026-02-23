@@ -1,0 +1,26 @@
++
++
+-
+-
+IDENTIFIER(Integer)
+IDENTIFIER(null)
+IDENTIFIER(System)
+IDENTIFIER(abstract)
+IDENTIFIER(continue)
+IDENTIFIER(fornew)
+IDENTIFIER(switch)
+IDENTIFIER(assert)
+IDENTIFIER(default)
+IDENTIFIER(package)
+IDENTIFIER(synchronized)
+IDENTIFIER(do)
+IDENTIFIER(goto)
+IDENTIFIER(private)
+Line 17, column 6: unrecognized character ()
+Line 17, column 7: unrecognized character ()
+Line 17, column 8: unrecognized character ()
+Line 17, column 9: unrecognized character ()
+Line 17, column 15: unrecognized character ()
+Line 26, column 21: unrecognized character ()
+Line 35, column 21: unrecognized character ()
+Line 44, column 21: unrecognized character ()

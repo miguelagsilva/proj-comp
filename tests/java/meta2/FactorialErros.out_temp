@@ -1,0 +1,79 @@
+/
+/
+IDENTIFIER(Compilar)
+IDENTIFIER(com)
+IDENTIFIER(flag)
+-
+IDENTIFIER(e2)
+IDENTIFIER(class)
+IDENTIFIER(Factorial)
+Line 3, column 17: unrecognized character ({)
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(int)
+IDENTIFIER(factorial)
+(
+IDENTIFIER(int)
+IDENTIFIER(n)
+)
+Line 5, column 40: unrecognized character ({)
+IF
+(
+IDENTIFIER(n)
+=
+=
+NATURAL(0)
+)
+IDENTIFIER(return)
+NATURAL(1)
+Line 9, column 21: unrecognized character (;)
+IDENTIFIER(return)
+*
+IDENTIFIER(factorial)
+(
+IDENTIFIER(n)
+-
+NATURAL(1)
+)
+Line 11, column 32: unrecognized character (;)
+Line 13, column 5: unrecognized character (})
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(void)
+IDENTIFIER(main)
+(
+Line 17, column 29: unrecognized character ([)
+Line 17, column 30: unrecognized character (])
+IDENTIFIER(String)
+IDENTIFIER(args)
+)
+Line 17, column 44: unrecognized character ({)
+IDENTIFIER(int)
+IDENTIFIER(argument)
+Line 19, column 21: unrecognized character (;)
+IDENTIFIER(argument)
+=
+IDENTIFIER(Integer)
+Line 21, column 27: unrecognized character (.)
+IDENTIFIER(parseInt)
+(
+IDENTIFIER(args)
+Line 21, column 41: unrecognized character ([)
+NATURAL(0)
+Line 21, column 43: unrecognized character (])
+)
+Line 21, column 45: unrecognized character (;)
+IDENTIFIER(System)
+Line 23, column 15: unrecognized character (.)
+IDENTIFIER(out)
+Line 23, column 19: unrecognized character (.)
+IDENTIFIER(print)
+(
+IDENTIFIER(factorial)
+(
+IDENTIFIER(argument)
+)
+)
+Line 23, column 46: unrecognized character (;)
+Line 25, column 5: unrecognized character (})
+Line 27, column 1: unrecognized character (})

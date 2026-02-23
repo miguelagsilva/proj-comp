@@ -1,0 +1,38 @@
+IDENTIFIER(class)
+IDENTIFIER(assign)
+Line 1, column 13: unrecognized character (_)
+IDENTIFIER(error)
+Line 1, column 20: unrecognized character ({)
+Line 1, column 21: unrecognized character ()
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(void)
+IDENTIFIER(main)
+(
+IDENTIFIER(String)
+Line 2, column 33: unrecognized character ([)
+Line 2, column 34: unrecognized character (])
+IDENTIFIER(args)
+)
+Line 2, column 42: unrecognized character ({)
+Line 2, column 43: unrecognized character ()
+IDENTIFIER(f)
+(
+IDENTIFIER(i)
+=
+IDENTIFIER(j)
+=
+IDENTIFIER(a)
+Line 3, column 16: unrecognized character (&)
+Line 3, column 17: unrecognized character (&)
+IDENTIFIER(b)
+=
+IDENTIFIER(l)
+)
+Line 3, column 24: unrecognized character (;)
+Line 3, column 25: unrecognized character ()
+Line 4, column 3: unrecognized character (})
+Line 4, column 4: unrecognized character ()
+Line 5, column 1: unrecognized character (})
+Line 5, column 2: unrecognized character ()
+Line 6, column 1: unrecognized character ()

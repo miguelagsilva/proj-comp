@@ -1,0 +1,64 @@
+IDENTIFIER(class)
+IDENTIFIER(Factorial)
+Line 1, column 17: unrecognized character ({)
+Line 1, column 18: unrecognized character ()
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(boolean)
+IDENTIFIER(b)
+Line 2, column 24: unrecognized character (;)
+Line 2, column 25: unrecognized character ()
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(int)
+IDENTIFIER(factorial)
+(
+IDENTIFIER(int)
+IDENTIFIER(n)
+)
+Line 3, column 36: unrecognized character ({)
+Line 3, column 37: unrecognized character ()
+if (n == 0)                 return 1;            return n * factorial(n-1);Line 6, column 40: unrecognized character ()
+Line 7, column 1: unrecognized character (})
+Line 7, column 2: unrecognized character ()
+Line 8, column 1: unrecognized character ()
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(void)
+IDENTIFIER(main)
+(
+IDENTIFIER(String)
+Line 9, column 31: unrecognized character ([)
+Line 9, column 32: unrecognized character (])
+IDENTIFIER(args)
+)
+Line 9, column 40: unrecognized character ({)
+Line 9, column 41: unrecognized character ()
+IDENTIFIER(int)
+IDENTIFIER(argument)
+,
+IDENTIFIER(teste)
+Line 10, column 27: unrecognized character (;)
+Line 10, column 28: unrecognized character ()
+IDENTIFIER(int)
+IDENTIFIER(n)
+Line 11, column 14: unrecognized character (;)
+Line 11, column 15: unrecognized character ()
+argument = Integer.parseInt(args[0]);            System.out.print(factorial(argument));Line 13, column 52: unrecognized character ()
+Line 14, column 1: unrecognized character (})
+Line 14, column 2: unrecognized character ()
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(int)
+IDENTIFIER(ole)
+(
+IDENTIFIER(int)
+IDENTIFIER(n)
+)
+Line 15, column 30: unrecognized character ({)
+Line 15, column 31: unrecognized character ()
+if (n == 0)                 return 1;            return n * factorial(n-1);Line 18, column 40: unrecognized character ()
+Line 19, column 1: unrecognized character (})
+Line 19, column 2: unrecognized character ()
+Line 20, column 1: unrecognized character (})
+Line 20, column 2: unrecognized character ()

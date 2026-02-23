@@ -1,0 +1,62 @@
+IDENTIFIER(class)
+IDENTIFIER(Compiladores2020)
+/
+NATURAL(2019)
+ Nao esta nada facil fazer comp  	O valor do pi 3.14 nao e igual 	a 34.34E-3*
+*
+/
+IDENTIFIER(while)
+IDENTIFIER(e)
+-
+NATURAL(1)
++
++
+IDENTIFIER(System)
+Line 8, column 7: unrecognized character (.)
+IDENTIFIER(out)
+Line 8, column 11: unrecognized character (.)
+IDENTIFIER(print)
+(
+Line 8, column 18: unrecognized character (")
+IDENTIFIER(Nao)
+IDENTIFIER(deu)
+IDENTIFIER(em)
+IDENTIFIER(nada)
+Line 8, column 36: unrecognized character (\)
+STRLIT(" \\ ")
+)
+Line 10, column 1: unrecognized character (")
+IDENTIFIER(no)
+IDENTIFIER(token)
+Line 10, column 12: unrecognized character (.)
+IDENTIFIER(length)
+Line 10, column 20: unrecognized character (\)
+IDENTIFIER(n)
+Line 10, column 23: unrecognized character (\)
+IDENTIFIER(f)
+Line 10, column 26: unrecognized character (\)
+/
+/
+IDENTIFIER(IMPORTANTE)
+Line 11, column 14: unrecognized character (\)
+IDENTIFIER(n)
+Line 11, column 17: unrecognized character (Ã)
+Line 11, column 18: unrecognized character (©)
+IDENTIFIER(suposto)
+IDENTIFIER(ser)
+IDENTIFIER(ignorado)
+DECIMAL(0.0)
+IDENTIFIER(e0)
+DECIMAL(.0)
+IDENTIFIER(e0)
+DECIMAL(.0)
+DECIMAL(123.123)
+IDENTIFIER(e123e)
+-
+-
+NATURAL(123)
+-
+Line 13, column 20: unrecognized character (>)
+IDENTIFIER(reallit)
+Line 13, column 29: unrecognized character (?)
+STRLIT(" \\\\\n 	")

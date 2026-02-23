@@ -1,0 +1,507 @@
+Line 2, column 1: unrecognized character (%)
+Line 3, column 1: unrecognized character (!)
+=
+Line 4, column 1: unrecognized character (!)
+Line 5, column 1: unrecognized character (|)
+Line 5, column 2: unrecognized character (|)
++
+Line 7, column 1: unrecognized character (})
+)
+Line 9, column 1: unrecognized character (])
+Line 11, column 1: unrecognized character (;)
+-
+Line 12, column 2: unrecognized character (>)
+Line 13, column 1: unrecognized character (<)
+Line 13, column 2: unrecognized character (<)
+Line 14, column 1: unrecognized character (>)
+Line 14, column 2: unrecognized character (>)
+Line 15, column 1: unrecognized character (^)
+IDENTIFIER(boolean)
+IDENTIFIER(class)
+Line 18, column 1: unrecognized character (.)
+IDENTIFIER(length)
+IDENTIFIER(Xlength)
+DOUBLE
+ELSE
+IF
+IDENTIFIER(int)
+IDENTIFIER(System)
+Line 24, column 7: unrecognized character (.)
+IDENTIFIER(out)
+Line 24, column 11: unrecognized character (.)
+IDENTIFIER(print)
+IDENTIFIER(SystemXout)
+Line 25, column 11: unrecognized character (.)
+IDENTIFIER(print)
+IDENTIFIER(System)
+Line 26, column 7: unrecognized character (.)
+IDENTIFIER(outXprint)
+IDENTIFIER(SystemXoutXprint)
+IDENTIFIER(Integer)
+Line 28, column 8: unrecognized character (.)
+IDENTIFIER(parseInt)
+IDENTIFIER(IntegerXparseInt)
+IDENTIFIER(public)
+IDENTIFIER(return)
+IDENTIFIER(static)
+IDENTIFIER(String)
+IDENTIFIER(void)
+IDENTIFIER(while)
++
++
+-
+-
+IDENTIFIER(null)
+IDENTIFIER(Integer)
+IDENTIFIER(System)
+IDENTIFIER(abstract)
+IDENTIFIER(assert)
+IDENTIFIER(break)
+IDENTIFIER(byte)
+IDENTIFIER(case)
+IDENTIFIER(catch)
+IDENTIFIER(char)
+IDENTIFIER(const)
+IDENTIFIER(default)
+IDENTIFIER(do)
+IDENTIFIER(enum)
+IDENTIFIER(extends)
+IDENTIFIER(final)
+IDENTIFIER(finally)
+IDENTIFIER(float)
+IDENTIFIER(for)
+IDENTIFIER(goto)
+IDENTIFIER(implements)
+IDENTIFIER(import)
+IDENTIFIER(instanceof)
+IDENTIFIER(interface)
+IDENTIFIER(long)
+IDENTIFIER(native)
+IDENTIFIER(new)
+IDENTIFIER(package)
+IDENTIFIER(private)
+IDENTIFIER(protected)
+IDENTIFIER(public)
+IDENTIFIER(short)
+IDENTIFIER(strictfp)
+IDENTIFIER(super)
+IDENTIFIER(switch)
+IDENTIFIER(synchronized)
+IDENTIFIER(this)
+IDENTIFIER(throw)
+IDENTIFIER(throws)
+IDENTIFIER(transient)
+IDENTIFIER(try)
+IDENTIFIER(volatile)
+IDENTIFIER(continue)
+IDENTIFIER(true)
+IDENTIFIER(false)
+IDENTIFIER(tru)
+IDENTIFIER(fals)
+IDENTIFIER(truee)
+IDENTIFIER(falsee)
+IDENTIFIER(sa9dyas9)
+Line 88, column 9: unrecognized character (_)
+IDENTIFIER(ya9sydas)
+Line 88, column 18: unrecognized character ($)
+NATURAL(0)
+IDENTIFIER(as)
+Line 88, column 22: unrecognized character (_)
+NATURAL(0)
+NATURAL(9)
+IDENTIFIER(dyas9)
+Line 89, column 7: unrecognized character (_)
+IDENTIFIER(ya9sydas)
+Line 89, column 16: unrecognized character ($)
+NATURAL(0)
+IDENTIFIER(as)
+Line 89, column 20: unrecognized character (_)
+NATURAL(0)
+NATURAL(01039123)
+Line 90, column 9: unrecognized character (_)
+NATURAL(897123)
+Line 90, column 16: unrecognized character (_)
+Line 90, column 17: unrecognized character (_)
+Line 90, column 18: unrecognized character (_)
+NATURAL(8931271)
+Line 91, column 1: unrecognized character (_)
+NATURAL(1039123)
+Line 91, column 9: unrecognized character (_)
+NATURAL(897123)
+Line 91, column 16: unrecognized character (_)
+Line 91, column 17: unrecognized character (_)
+Line 91, column 18: unrecognized character (_)
+NATURAL(8931271)
+IDENTIFIER(booleane)
+IDENTIFIER(classe)
+Line 94, column 1: unrecognized character (.)
+IDENTIFIER(lengthe)
+IDENTIFIER(Xlengthe)
+IDENTIFIER(doublee)
+IDENTIFIER(elsee)
+IDENTIFIER(ife)
+IDENTIFIER(inte)
+IDENTIFIER(System)
+Line 100, column 7: unrecognized character (.)
+IDENTIFIER(out)
+Line 100, column 11: unrecognized character (.)
+IDENTIFIER(printe)
+IDENTIFIER(SystemXout)
+Line 101, column 11: unrecognized character (.)
+IDENTIFIER(printe)
+IDENTIFIER(System)
+Line 102, column 7: unrecognized character (.)
+IDENTIFIER(outXprinte)
+IDENTIFIER(SystemXoutXprinte)
+IDENTIFIER(Integer)
+Line 104, column 8: unrecognized character (.)
+IDENTIFIER(parseInte)
+IDENTIFIER(IntegerXparseInte)
+IDENTIFIER(publice)
+IDENTIFIER(returne)
+IDENTIFIER(statice)
+IDENTIFIER(Stringe)
+IDENTIFIER(voide)
+IDENTIFIER(whilee)
++
++
+IDENTIFIER(e)
+-
+-
+IDENTIFIER(e)
+IDENTIFIER(nulle)
+IDENTIFIER(Integere)
+IDENTIFIER(Systeme)
+IDENTIFIER(abstracte)
+IDENTIFIER(asserte)
+IDENTIFIER(breake)
+IDENTIFIER(byte)
+Line 120, column 5: unrecognized character (\)
+IDENTIFIER(case)
+Line 121, column 5: unrecognized character (\)
+IDENTIFIER(catch)
+Line 122, column 6: unrecognized character (\)
+IDENTIFIER(char)
+Line 123, column 5: unrecognized character (\)
+IDENTIFIER(const)
+Line 124, column 6: unrecognized character (\)
+IDENTIFIER(default)
+Line 125, column 8: unrecognized character (\)
+IDENTIFIER(do)
+Line 126, column 3: unrecognized character (\)
+IDENTIFIER(enum)
+Line 127, column 5: unrecognized character (\)
+IDENTIFIER(extends)
+Line 128, column 8: unrecognized character (.)
+IDENTIFIER(final)
+Line 129, column 6: unrecognized character (.)
+IDENTIFIER(finally)
+Line 130, column 8: unrecognized character (.)
+IDENTIFIER(float)
+Line 131, column 6: unrecognized character (.)
+IDENTIFIER(for)
+Line 133, column 4: unrecognized character (.)
+IDENTIFIER(goto)
+Line 134, column 5: unrecognized character (.)
+IDENTIFIER(implements)
+,
+IDENTIFIER(import)
+,
+IDENTIFIER(instanceof)
+,
+IDENTIFIER(interface)
+,
+IDENTIFIER(long)
+,
+IDENTIFIER(native)
+,
+IDENTIFIER(new)
+,
+IDENTIFIER(packagee)
+IDENTIFIER(privatee)
+IDENTIFIER(protectede)
+IDENTIFIER(publice)
+IDENTIFIER(shorte)
+IDENTIFIER(strictfpe)
+IDENTIFIER(supere)
+IDENTIFIER(switche)
+IDENTIFIER(esynchronizede)
+IDENTIFIER(thise)
+IDENTIFIER(throwe)
+IDENTIFIER(throws)
+IDENTIFIER(transiente)
+IDENTIFIER(tryr)
+IDENTIFIER(volatilee)
+IDENTIFIER(continue)
+Line 159, column 9: unrecognized character (\)
+Line 161, column 1: unrecognized character (&)
+Line 161, column 2: unrecognized character (&)
+Line 161, column 4: unrecognized character (%)
+Line 161, column 5: unrecognized character (&)
+Line 161, column 7: unrecognized character (%)
+Line 161, column 10: unrecognized character (&)
+Line 161, column 11: unrecognized character (&)
+Line 161, column 12: unrecognized character (|)
+Line 161, column 13: unrecognized character (|)
+Line 161, column 15: unrecognized character (&)
+Line 161, column 16: unrecognized character (|)
+Line 161, column 18: unrecognized character (&)
+Line 161, column 19: unrecognized character (&)
+Line 161, column 20: unrecognized character (&)
+Line 161, column 22: unrecognized character (%)
+Line 161, column 23: unrecognized character (%)
+Line 161, column 24: unrecognized character (%)
+Line 161, column 26: unrecognized character (|)
+Line 161, column 27: unrecognized character (|)
+Line 161, column 28: unrecognized character (|)
+=
+=
+=
+=
+IDENTIFIER(e)
+IDENTIFIER(fefa)
+*
+*
+*
+*
+*
+*
+Line 165, column 7: unrecognized character (%)
+*
+/
+/
+**  ////**
+/*
+//****
+/*
+/*
+/
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+Line 170, column 5: unrecognized character (&)
+Line 172, column 1: unrecognized character (&)
+NATURAL(6)
+NATURAL(6)
+NATURAL(66)
+NATURAL(66)
+NATURAL(7)
+Line 172, column 19: unrecognized character (&)
+Line 172, column 20: unrecognized character (&)
+Line 172, column 21: unrecognized character (&)
+Line 172, column 22: unrecognized character (&)
+NATURAL(6)
+Line 172, column 25: unrecognized character (&)
+Line 172, column 27: unrecognized character (&)
+/
+NATURAL(6)
+Line 172, column 31: unrecognized character (&)
+Line 172, column 34: unrecognized character (&)
+=
+=
+=
+=
+=
+NATURAL(0)
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+NATURAL(0)
+NATURAL(0)
+=
+=
+=
+NATURAL(00)
+Line 176, column 1: unrecognized character (<)
+=
+=
+=
+=
+Line 176, column 8: unrecognized character (>)
+Line 176, column 10: unrecognized character (>)
+=
+Line 176, column 13: unrecognized character (>)
+=
+Line 176, column 16: unrecognized character (>)
+=
+Line 176, column 19: unrecognized character (>)
+=
+Line 176, column 22: unrecognized character (>)
+=
+=
+Line 176, column 31: unrecognized character (>)
+=
+Line 176, column 33: unrecognized character (>)
+Line 176, column 34: unrecognized character (>)
+Line 176, column 35: unrecognized character (<)
+Line 176, column 37: unrecognized character (>)
+Line 176, column 39: unrecognized character (>)
+Line 176, column 41: unrecognized character (<)
+Line 176, column 43: unrecognized character (<)
+NATURAL(0)
+=
+Line 176, column 48: unrecognized character (<)
+=
+Line 176, column 51: unrecognized character (<)
+NATURAL(0)
+=
+Line 176, column 55: unrecognized character (<)
+=
+Line 178, column 1: unrecognized character ({)
+Line 178, column 4: unrecognized character ({)
+Line 178, column 5: unrecognized character (})
+Line 178, column 6: unrecognized character ({)
+Line 178, column 7: unrecognized character ([)
+Line 178, column 8: unrecognized character (])
+Line 178, column 9: unrecognized character ([)
+Line 178, column 10: unrecognized character (])
+Line 178, column 11: unrecognized character ({)
+Line 178, column 12: unrecognized character (})
+(
+)
+(
+)
+/
+Line 178, column 18: unrecognized character ({)
+Line 178, column 19: unrecognized character (})
+Line 178, column 23: unrecognized character ($)
+Line 178, column 26: unrecognized character (])
+)
+(
+)
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+/
+/
+IDENTIFIER(ajskdnasld)
+IDENTIFIER(naosdjaiopdj)
+IDENTIFIER(ao0d)
+IDENTIFIER(jad9asy)
+)
+(
+IDENTIFIER(S)
+(
+IDENTIFIER(Uy)
+=
+IDENTIFIER(DASU0DUA)
+Line 181, column 55: unrecognized character (?)
+IDENTIFIER(AS)
+(
+)
+IDENTIFIER(DAS)
+=
+Line 181, column 64: unrecognized character (?)
+IDENTIFIER(D)
+=
+/
+IDENTIFIER(AS)
+Line 181, column 70: unrecognized character (?)
+IDENTIFIER(DGHASDSA)
+=
+(
+/
+IDENTIFIER(DASU)
+)
+NATURAL(0)
+IDENTIFIER(ysaS)
+=
+)
+IDENTIFIER(H)
+)
+IDENTIFIER(ASH)
+Line 181, column 100: unrecognized character (?)
+=
+/
+IDENTIFIER(aso)
+IDENTIFIER(dijaj)
+*
+*
+/
+89 asud'as8dyua9'shd as98hd pashhd as789d hapda sdasuih uopn STRLIT("sui ghasuidhasui dhiash ")
+STRLIT("")
+IDENTIFIER(sapdj)
+IDENTIFIER(a)
+Line 190, column 10: unrecognized character (")
+IDENTIFIER(jan)
+IDENTIFIER(adn)
+IDENTIFIER(s)
+Line 190, column 20: unrecognized character (Ã)
+Line 190, column 21: unrecognized character (§)
+IDENTIFIER(jso)
+IDENTIFIER(aso)
+Line 190, column 29: unrecognized character (\)
+Line 191, column 23: invalid escape sequence (\U)
+Line 192, column 1: unrecognized character (")
+IDENTIFIER(asiod)
+IDENTIFIER(oa)
+IDENTIFIER(das)
+IDENTIFIER(jas)
+Line 192, column 18: unrecognized character (\)
+Line 193, column 1: unrecognized character (")
+IDENTIFIER(asidj)
+IDENTIFIER(aspjdas)
+Line 193, column 16: unrecognized character (\)
+IDENTIFIER(f)
+STRLIT("aspj dpas !")
+STRLIT("")

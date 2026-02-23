@@ -1,0 +1,122 @@
+/
+/
+IDENTIFIER(jucompiler)
+-
+IDENTIFIER(e1)
+Line 1, column 19: unrecognized character (<)
+IDENTIFIER(errors)
+Line 1, column 27: unrecognized character (.)
+IDENTIFIER(java)
+/
+/
+IDENTIFIER(the)
+IDENTIFIER(standard)
+IDENTIFIER(Java)
+IDENTIFIER(compiler)
+IDENTIFIER(also)
+IDENTIFIER(shows)
+IDENTIFIER(these)
+IDENTIFIER(lexical)
+IDENTIFIER(errors)
+STRLIT("")
+/
+/
+IDENTIFIER(the)
+IDENTIFIER(empty)
+IDENTIFIER(string)
+STRLIT("\\")
+/
+/
+IDENTIFIER(the)
+IDENTIFIER(empty)
+IDENTIFIER(string)
+STRLIT("\"")
+/
+/
+IDENTIFIER(a)
+IDENTIFIER(string)
+IDENTIFIER(containing)
+Line 5, column 46: unrecognized character (")
+IDENTIFIER(alone)
+STRLIT("This is a string")
+/
+/
+IDENTIFIER(a)
+IDENTIFIER(string)
+IDENTIFIER(containing)
+NATURAL(16)
+IDENTIFIER(characters)
+STRLIT("This is a ")
++
+/
+/
+IDENTIFIER(actually)
+IDENTIFIER(a)
+IDENTIFIER(string)
+-
+IDENTIFIER(valued)
+IDENTIFIER(constant)
+IDENTIFIER(expression)
+,
+Line 8, column 20: invalid escape sequence (\g)
+/
+/
+IDENTIFIER(formed)
+IDENTIFIER(from)
+IDENTIFIER(two)
+IDENTIFIER(string)
+IDENTIFIER(literals)
+IDENTIFIER(class)
+IDENTIFIER(Small)
+Line 9, column 13: unrecognized character (#)
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(void)
+IDENTIFIER(main)
+(
+IDENTIFIER(String)
+Line 10, column 32: unrecognized character ([)
+Line 10, column 33: unrecognized character (])
+IDENTIFIER(args)
+)
+Line 10, column 41: unrecognized character ({)
+Line 11, column 2: unrecognized character (})
+Line 12, column 1: unrecognized character (#)
+STRLIT("Hello /\\\\**/ boyyyy")
+IDENTIFIER(vari)
+Line 16, column 5: unrecognized character (.)
+IDENTIFIER(able)
+NATURAL(02)
+NATURAL(1)
+Line 18, column 2: unrecognized character (.)
+IDENTIFIER(e0)
+Line 18, column 5: unrecognized character (_)
+NATURAL(0)
+Line 19, column 1: unrecognized character (")
+Line 19, column 2: unrecognized character (\)
+STRLIT("\\")
+Line 21, column 1: unrecognized character (")
+IDENTIFIER(hey)
+Line 21, column 5: unrecognized character (\)
+STRLIT("\\")
+IDENTIFIER(asd3)
+DECIMAL(.3)
+/
+/
+IDENTIFIER(Mooshak)
+IDENTIFIER(Spamar)
+IDENTIFIER(mais)
+IDENTIFIER(deste)
+IDENTIFIER(genero)
+IDENTIFIER(a)
+-
+DECIMAL(1.0)
+IDENTIFIER(e)
+-
+NATURAL(1)
+NATURAL(1)
+Line 29, column 2: unrecognized character (.)
+IDENTIFIER(E)
++
+NATURAL(09)
+printf is used to print a message \*    printf("Hello world");     return 0; 

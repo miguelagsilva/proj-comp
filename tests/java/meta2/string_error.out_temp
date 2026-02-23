@@ -1,0 +1,42 @@
+/
+/
+IDENTIFIER(Neste)
+IDENTIFIER(caso)
+IDENTIFIER(de)
+IDENTIFIER(teste)
+IDENTIFIER(facam)
+IDENTIFIER(com)
+IDENTIFIER(a)
+IDENTIFIER(flag)
+-
+IDENTIFIER(e2)
+IDENTIFIER(class)
+IDENTIFIER(Teste)
+Line 4, column 13: unrecognized character ({)
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(int)
+IDENTIFIER(main)
+(
+IDENTIFIER(String)
+Line 5, column 32: unrecognized character ([)
+Line 5, column 33: unrecognized character (])
+IDENTIFIER(args)
+)
+Line 5, column 40: unrecognized character ({)
+IDENTIFIER(int)
+IDENTIFIER(ru)
+Line 6, column 11: unrecognized character (;)
+IDENTIFIER(int)
+IDENTIFIER(vv)
+Line 6, column 19: unrecognized character (;)
+IF
+(
+IDENTIFIER(false)
+)
+STRLIT("strlit")
+ELSE
+IDENTIFIER(return)
+Line 10, column 15: unrecognized character (;)
+Line 11, column 3: unrecognized character (})
+Line 12, column 1: unrecognized character (})

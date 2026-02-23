@@ -1,0 +1,309 @@
+IDENTIFIER(class)
+IDENTIFIER(Teste)
+Line 1, column 12: unrecognized character ({)
+/
+/
+IDENTIFIER(varios)
+IDENTIFIER(fielddecl)
+IDENTIFIER(seguidos)
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(int)
+IDENTIFIER(a)
+,
+IDENTIFIER(b)
+,
+IDENTIFIER(c)
+,
+IDENTIFIER(d)
+Line 3, column 30: unrecognized character (;)
+/
+/
+IDENTIFIER(varios)
+IDENTIFIER(inputs)
+IDENTIFIER(na)
+IDENTIFIER(funcao)
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(void)
+IDENTIFIER(main)
+(
+IDENTIFIER(int)
+IDENTIFIER(a)
+,
+DOUBLE
+IDENTIFIER(c)
+,
+IDENTIFIER(boolean)
+IDENTIFIER(d)
+,
+IDENTIFIER(int)
+IDENTIFIER(h)
+)
+Line 5, column 63: unrecognized character ({)
+/
+/
+IDENTIFIER(varios)
+IDENTIFIER(var)
+IDENTIFIER(decl)
+IDENTIFIER(seguidos)
+IDENTIFIER(int)
+IDENTIFIER(x)
+,
+IDENTIFIER(y)
+,
+IDENTIFIER(z)
+,
+IDENTIFIER(k)
+,
+IDENTIFIER(l)
+,
+IDENTIFIER(m)
+,
+IDENTIFIER(o)
+,
+IDENTIFIER(p)
+Line 7, column 28: unrecognized character (;)
+/
+/
+IF
+IDENTIFIER(sem)
+IDENTIFIER(nada)
+IDENTIFIER(la)
+IDENTIFIER(dentro)
+,
+NATURAL(2)
+IDENTIFIER(blocks)
+IF
+(
+IDENTIFIER(x1)
+)
+Line 9, column 17: unrecognized character ({)
+Line 9, column 18: unrecognized character (})
+/
+/
+IF
+IDENTIFIER(com)
+NATURAL(1)
+IDENTIFIER(statement)
+,
+NATURAL(1)
+IDENTIFIER(block)
+IDENTIFIER(no)
+IDENTIFIER(final)
+IF
+(
+IDENTIFIER(x2)
+)
+Line 11, column 17: unrecognized character ({)
+IDENTIFIER(a)
+=
+NATURAL(1)
+Line 12, column 18: unrecognized character (;)
+Line 13, column 9: unrecognized character (})
+IF
+(
+IDENTIFIER(x3)
+)
+Line 14, column 16: unrecognized character ({)
+/
+/
+IF
+IDENTIFIER(com)
+NATURAL(2)
+IDENTIFIER(statements)
+,
+IDENTIFIER(block)
+IDENTIFIER(no)
+IDENTIFIER(dps)
+IDENTIFIER(da)
+IDENTIFIER(Expr)
+IDENTIFIER(do)
+IF
+IDENTIFIER(b)
+=
+NATURAL(2)
+Line 15, column 18: unrecognized character (;)
+IDENTIFIER(c)
+=
+NATURAL(3)
+Line 16, column 18: unrecognized character (;)
+Line 17, column 9: unrecognized character (})
+ELSE
+Line 18, column 13: unrecognized character ({)
+IDENTIFIER(d)
+=
+NATURAL(4)
+Line 19, column 16: unrecognized character (;)
+Line 20, column 9: unrecognized character (})
+IF
+(
+IDENTIFIER(x4)
+)
+Line 21, column 16: unrecognized character (;)
+/
+/
+IDENTIFIER(mesma)
+IDENTIFIER(ideia)
+IDENTIFIER(que)
+IDENTIFIER(ter)
+IDENTIFIER(duas)
+IDENTIFIER(brackets)
+,
+NATURAL(2)
+IDENTIFIER(blocks)
+IF
+(
+IDENTIFIER(true)
+)
+Line 23, column 19: unrecognized character ({)
+Line 23, column 20: unrecognized character (})
+ELSE
+IF
+(
+IDENTIFIER(false)
+)
+Line 23, column 38: unrecognized character ({)
+Line 23, column 39: unrecognized character (})
+/
+/
+NATURAL(1)
+IDENTIFIER(block)
+IDENTIFIER(para)
+IDENTIFIER(o)
+IF
+(
+NATURAL(1)
+IDENTIFIER(caso)
+IDENTIFIER(de)
+IDENTIFIER(cima)
+)
+,
+IDENTIFIER(e)
+IDENTIFIER(depois)
+NATURAL(1)
+IDENTIFIER(block)
+IDENTIFIER(tamb)
+Line 24, column 68: unrecognized character (Ã)
+Line 24, column 69: unrecognized character (©)
+IDENTIFIER(m)
+IDENTIFIER(para)
+IDENTIFIER(o)
+IDENTIFIER(proximo)
+IF
+/
+/
+IDENTIFIER(NOTA)
+Line 25, column 16: unrecognized character (:)
+IDENTIFIER(aqui)
+IDENTIFIER(o)
+IDENTIFIER(block)
+IDENTIFIER(do)
+NATURAL(1)
+IF
+IDENTIFIER(tem)
+IDENTIFIER(que)
+IDENTIFIER(vir)
+IDENTIFIER(antes)
+IDENTIFIER(do)
+IDENTIFIER(segundo)
+IF
+,
+IDENTIFIER(senao)
+IDENTIFIER(vai)
+IDENTIFIER(dar)
+IDENTIFIER(erro)
+,
+IDENTIFIER(isto)
+Line 25, column 97: unrecognized character (Ã)
+Line 25, column 98: unrecognized character (©)
+IDENTIFIER(testado)
+Line 25, column 107: unrecognized character (!)
+Line 25, column 108: unrecognized character (!)
+IDENTIFIER(a)
+=
+IDENTIFIER(b)
+Line 27, column 14: unrecognized character (.)
+IDENTIFIER(length)
+Line 27, column 21: unrecognized character (;)
+/
+/
+IDENTIFIER(teste)
+IDENTIFIER(para)
+IDENTIFIER(dotlength)
+IDENTIFIER(b)
+=
+NATURAL(1)
+Line 28, column 14: unrecognized character (;)
+/
+/
+IDENTIFIER(declit)
+IDENTIFIER(c)
+=
+IDENTIFIER(false)
+Line 29, column 18: unrecognized character (;)
+/
+/
+IDENTIFIER(boollit)
+IDENTIFIER(c1)
+=
+IDENTIFIER(true)
+Line 30, column 18: unrecognized character (;)
+IDENTIFIER(d)
+=
+DECIMAL(1.0)
+Line 31, column 16: unrecognized character (;)
+/
+/
+IDENTIFIER(reallit)
+IDENTIFIER(Integer)
+Line 32, column 16: unrecognized character (.)
+IDENTIFIER(parseInt)
+(
+IDENTIFIER(abc)
+Line 32, column 29: unrecognized character ([)
+IDENTIFIER(a)
+=
+NATURAL(1)
+Line 32, column 33: unrecognized character (])
+)
+Line 32, column 35: unrecognized character (;)
+/
+/
+IDENTIFIER(parseArgs)
+/
+/
+IDENTIFIER(teste)
+IDENTIFIER(de)
+IDENTIFIER(calls)
+IDENTIFIER(sem)
+IDENTIFIER(nada)
+,
+IDENTIFIER(calls)
+IDENTIFIER(la)
+IDENTIFIER(dentro)
+IDENTIFIER(passarAComp)
+(
+IDENTIFIER(Zbording)
+,
+IDENTIFIER(passarAComp)
+(
+IDENTIFIER(Epossivel)
+)
+,
+IDENTIFIER(compPassar)
+(
+IDENTIFIER(ouChumbar)
+)
+,
+IDENTIFIER(chumbar)
+(
+IDENTIFIER(tambemSefaz)
+(
+IDENTIFIER(ESoFazer)
+)
+)
+)
+Line 35, column 106: unrecognized character (;)
+Line 37, column 5: unrecognized character (})
+Line 38, column 1: unrecognized character (})

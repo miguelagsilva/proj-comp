@@ -1,0 +1,128 @@
+IDENTIFIER(class)
+IDENTIFIER(AY)
+Line 1, column 10: unrecognized character ({)
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(int)
+IDENTIFIER(ay)
+(
+IDENTIFIER(boolean)
+IDENTIFIER(b)
+)
+Line 2, column 37: unrecognized character ({)
+Line 2, column 39: unrecognized character (")
+IDENTIFIER(comma)
+IDENTIFIER(missing)
+IF
+(
+IDENTIFIER(n)
+=
+=
+NATURAL(0)
+)
+Line 3, column 20: unrecognized character ({)
+IDENTIFIER(a)
++
++
+/
+/
+IDENTIFIER(Make)
+IDENTIFIER(sure)
+IDENTIFIER(the)
+IDENTIFIER(columns)
+IDENTIFIER(are)
+IDENTIFIER(still)
+IDENTIFIER(correct)
+IDENTIFIER(b)
+Line 5, column 4: unrecognized character (~)
+Line 5, column 5: unrecognized character (;)
+Line 6, column 2: unrecognized character (})
+IDENTIFIER(a)
+=
+NATURAL(2)
+=
+IDENTIFIER(b)
+Line 7, column 11: unrecognized character (|)
+Line 7, column 12: unrecognized character (|)
+NATURAL(7)
+=
+NATURAL(1)
+Line 7, column 19: unrecognized character (?)
+=
+NATURAL(2)
+Line 7, column 24: unrecognized character (;)
+IDENTIFIER(return)
+IDENTIFIER(c)
+Line 9, column 10: unrecognized character (;)
+Line 10, column 5: unrecognized character (})
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(void)
+IDENTIFIER(main)
+(
+IDENTIFIER(String)
+Line 12, column 35: unrecognized character ([)
+Line 12, column 36: unrecognized character (])
+IDENTIFIER(args)
+)
+Line 12, column 44: unrecognized character ({)
+IF
+ELSE
+IDENTIFIER(a)
+Line 13, column 12: unrecognized character (&)
+Line 13, column 13: unrecognized character (&)
+IDENTIFIER(s)
+Line 13, column 16: unrecognized character (;)
+IDENTIFIER(int)
+IDENTIFIER(argument)
+=
+IDENTIFIER(Integer)
+Line 15, column 31: unrecognized character (.)
+IDENTIFIER(parseInt)
+(
+IDENTIFIER(args)
+Line 15, column 45: unrecognized character ([)
+NATURAL(0)
+Line 15, column 47: unrecognized character (])
+)
+Line 15, column 49: unrecognized character (;)
+Line 15, column 50: unrecognized character (;)
+Line 15, column 51: unrecognized character (;)
+Line 15, column 52: unrecognized character (;)
+IDENTIFIER(String)
+NATURAL(2)
+=
+Line 16, column 13: unrecognized character ({)
+(
+)
+(
+)
+IF
+IF
+IF
+ELSE
+ELSE
+ELSE
+IDENTIFIER(a)
+Line 16, column 47: unrecognized character (])
+Line 16, column 48: unrecognized character (;)
+Line 16, column 50: unrecognized character (})
+IDENTIFIER(System)
+Line 17, column 15: unrecognized character (.)
+IDENTIFIER(out)
+Line 17, column 19: unrecognized character (.)
+Line 17, column 20: unrecognized character (;)
+IDENTIFIER(int)
+IDENTIFIER(a)
+=
+IDENTIFIER(b)
+Line 18, column 11: unrecognized character (;)
+IDENTIFIER(b)
+=
+IDENTIFIER(c)
+Line 19, column 7: unrecognized character (;)
+IDENTIFIER(c)
+*
+IDENTIFIER(d)
+Line 20, column 5: unrecognized character (;)
+print(ay([v}));     }   Don't 		Forget 				That 					Columns are still incrementing

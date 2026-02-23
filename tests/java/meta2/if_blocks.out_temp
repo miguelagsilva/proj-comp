@@ -1,0 +1,91 @@
+IDENTIFIER(class)
+IDENTIFIER(program)
+Line 1, column 14: unrecognized character ({)
+IDENTIFIER(public)
+IDENTIFIER(static)
+IDENTIFIER(void)
+IDENTIFIER(main)
+(
+)
+Line 2, column 27: unrecognized character ({)
+IF
+(
+IDENTIFIER(x)
+=
+=
+NATURAL(1)
+)
+Line 3, column 11: unrecognized character ({)
+Line 3, column 12: unrecognized character (})
+IF
+(
+IDENTIFIER(x)
+=
+=
+NATURAL(1)
+)
+Line 4, column 11: unrecognized character ({)
+Line 4, column 12: unrecognized character (})
+ELSE
+Line 4, column 17: unrecognized character ({)
+Line 4, column 18: unrecognized character (})
+IF
+(
+IDENTIFIER(x)
+=
+=
+NATURAL(1)
+)
+Line 5, column 11: unrecognized character ({)
+IDENTIFIER(statement)
+(
+)
+Line 5, column 23: unrecognized character (;)
+Line 5, column 24: unrecognized character (})
+IF
+(
+IDENTIFIER(x)
+=
+=
+NATURAL(1)
+)
+Line 6, column 11: unrecognized character ({)
+IDENTIFIER(statement1)
+(
+)
+Line 6, column 24: unrecognized character (;)
+IDENTIFIER(statement2)
+(
+)
+Line 6, column 37: unrecognized character (;)
+Line 6, column 38: unrecognized character (})
+IF
+(
+IDENTIFIER(x)
+=
+=
+NATURAL(1)
+)
+Line 7, column 11: unrecognized character ({)
+IDENTIFIER(statement3)
+(
+)
+Line 7, column 24: unrecognized character (;)
+IDENTIFIER(statement4)
+(
+)
+Line 7, column 37: unrecognized character (;)
+Line 7, column 38: unrecognized character (})
+ELSE
+Line 7, column 43: unrecognized character ({)
+IDENTIFIER(statement5)
+(
+)
+Line 7, column 56: unrecognized character (;)
+IDENTIFIER(statement6)
+(
+)
+Line 7, column 69: unrecognized character (;)
+Line 7, column 70: unrecognized character (})
+Line 8, column 2: unrecognized character (})
+Line 9, column 1: unrecognized character (})
