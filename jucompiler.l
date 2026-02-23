@@ -17,7 +17,7 @@ int column = 1;
 %}
 
 /* Define token patterns */
-empty      [ \t]
+empty      [ \t\f\r]
 letter     [a-zA-Z_$]
 digit      [0-9]
 not_zero   [1-9]
@@ -75,7 +75,7 @@ exponent ([eE][+-]?{seq_digits})
 "while"                 { printf("WHILE\n"); }
 "++"|"--"|"null"|"Integer"|"System" { printf("RESERVERD\n"); }
 
-{empty}                 { ; }
+{empty}                { ; }
 "\n"                    { ; }
 
 0|({not_zero}(({digit}|"_")*{digit})?)               { printf("NATURAL(%s)\n", yytext); } /* 1____010 aceita? */
