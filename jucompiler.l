@@ -1,7 +1,28 @@
 %{
+#include <stdarg.h>
+
 /* C variables */
 int line = 1;
 int column = 1;
+int print_tokens = 0;
+
+/* C functions */
+void process_command(int argc, char *argv[]) {
+  if (argc > 2)        
+    printf("Usage: %s [-l]\n", argv[0]);
+  else if (argc == 2) {
+    if (strcmp(argv[1], "-l") == 0) {
+      print_tokens = 1;
+    }
+  } 
+}
+void print_token(const char* fmt, ...) {
+  if (!print_tokens) return;
+  va_list args;
+  va_start(args, fmt);
+  vprintf(fmt, args);
+  va_end(args);
+}
 
 /* Track line and column for every token */
 #define YY_USER_ACTION \
@@ -30,63 +51,61 @@ exponent ([eE][+-]?{seq_digits})
 %X COMMENT
 
 %%
-"true"|"false"          { printf("BOOLLIT\n"); }
-"&&"                    { printf("AND\n"); }
-"="                     { printf("ASSIGN\n"); }
-"*"                     { printf("STAR\n"); }
-","                     { printf("COMMA\n"); }
-"/"                     { printf("DIV\n"); }
-"=="                    { printf("EQ\n"); }
-">="                    { printf("GE\n"); }
-">"                     { printf("GT\n"); }
-"{"                     { printf("LBRACE\n"); }
-"<="                    { printf("LE\n"); }
-"("                     { printf("LPAR\n"); }
-"["                     { printf("LSQ\n"); }
-"<"                     { printf("LT\n"); }
-"-"                     { printf("MINUS\n"); }
-"%"                     { printf("MOD\n"); }
-"!="                    { printf("NE\n"); }
-"!"                     { printf("NOT\n"); }
-"||"                    { printf("OR\n"); }
-"+"                     { printf("PLUS\n"); }
-"}"                     { printf("RBRACE\n"); }
-")"                     { printf("RPAR\n"); }
-"]"                     { printf("RSQ\n"); }
-";"                     { printf("SEMICOLON\n"); }
-"->"                    { printf("ARROW\n"); }
-"<<"                    { printf("LSHIFT\n"); }
-">>"                    { printf("RSHIFT\n"); }
-"^"                     { printf("XOR\n"); }
-"boolean"               { printf("BOOL\n"); }
-"class"                 { printf("CLASS\n"); }
-".length"               { printf("DOTLENGTH\n"); }
-"double"                { printf("DOUBLE\n"); }
-"else"                  { printf("ELSE\n"); }
-"if"                    { printf("IF\n"); }
-"int"                   { printf("INT\n"); }
-"System.out.print"      { printf("PRINT\n"); }
-"Integer.parseInt"      { printf("PARSEINT\n"); }
-"public"                { printf("PUBLIC\n"); }
-"return"                { printf("RETURN\n"); }
-"static"                { printf("STATIC\n"); }
-"String"                { printf("STRING\n"); }
-"void"                  { printf("VOID\n"); }
-"while"                 { printf("WHILE\n"); }
-"++"|"--"|"null"|"Integer"|"System" { printf("RESERVERD\n"); }
+"true"|"false"          { print_token("BOOLLIT\n"); }
+"&&"                    { print_token("AND\n"); }
+"="                     { print_token("ASSIGN\n"); }
+"*"                     { print_token("STAR\n"); }
+","                     { print_token("COMMA\n"); }
+"/"                     { print_token("DIV\n"); }
+"=="                    { print_token("EQ\n"); }
+">="                    { print_token("GE\n"); }
+">"                     { print_token("GT\n"); }
+"{"                     { print_token("LBRACE\n"); }
+"<="                    { print_token("LE\n"); }
+"("                     { print_token("LPAR\n"); }
+"["                     { print_token("LSQ\n"); }
+"<"                     { print_token("LT\n"); }
+"-"                     { print_token("MINUS\n"); }
+"%"                     { print_token("MOD\n"); }
+"!="                    { print_token("NE\n"); }
+"!"                     { print_token("NOT\n"); }
+"||"                    { print_token("OR\n"); }
+"+"                     { print_token("PLUS\n"); }
+"}"                     { print_token("RBRACE\n"); }
+")"                     { print_token("RPAR\n"); }
+"]"                     { print_token("RSQ\n"); }
+";"                     { print_token("SEMICOLON\n"); }
+"->"                    { print_token("ARROW\n"); }
+"<<"                    { print_token("LSHIFT\n"); }
+">>"                    { print_token("RSHIFT\n"); }
+"^"                     { print_token("XOR\n"); }
+"boolean"               { print_token("BOOL\n"); }
+"class"                 { print_token("CLASS\n"); }
+".length"               { print_token("DOTLENGTH\n"); }
+"double"                { print_token("DOUBLE\n"); }
+"else"                  { print_token("ELSE\n"); }
+"if"                    { print_token("IF\n"); }
+"int"                   { print_token("INT\n"); }
+"System.out.print"      { print_token("PRINT\n"); }
+"Integer.parseInt"      { print_token("PARSEINT\n"); }
+"public"                { print_token("PUBLIC\n"); }
+"return"                { print_token("RETURN\n"); }
+"static"                { print_token("STATIC\n"); }
+"String"                { print_token("STRING\n"); }
+"void"                  { print_token("VOID\n"); }
+"while"                 { print_token("WHILE\n"); }
+"++"|"--"|"null"|"Integer"|"System" { print_token("RESERVED\n"); }
 
 {empty}                { ; }
 "\n"                    { ; }
 
-0|({not_zero}(({digit}|"_")*{digit})?)               { printf("NATURAL(%s)\n", yytext); } /* 1____010 aceita? */
-
+0|({not_zero}(({digit}|"_")*{digit})?)               { print_token("NATURAL(%s)\n", yytext); } /* 1____010 aceita? */
 
 {seq_digits}"."{seq_digits}?{exponent}? |
 "."{seq_digits}{exponent}?               |
-{seq_digits}{exponent}               { printf("DECIMAL(%s)\n", yytext); }
+{seq_digits}{exponent}               { print_token("DECIMAL(%s)\n", yytext); }
 
-
-{letter}({letter}|{digit})*        { printf("IDENTIFIER(%s)\n", yytext); }
+{letter}({letter}|{digit})*        { print_token("IDENTIFIER(%s)\n", yytext); }
 
 
 \"{stringlit}\\[^fnrt\\\"\n\r]([^\\\"\n\r]|\\.)*\"  {
@@ -103,7 +122,7 @@ exponent ([eE][+-]?{seq_digits})
     }
   }
 }
-\"{stringlit}\"  { printf("STRLIT(%s)\n", yytext); }
+\"{stringlit}\"  { print_token("STRLIT(%s)\n", yytext); }
 
 "/*"                    { BEGIN(COMMENT); }
 <COMMENT>.              { ECHO; }
@@ -117,10 +136,11 @@ extern char *yytext;  /* the matched text */
 extern int yyleng;
 extern int yylex();
 
-int main() {
-    yylex();    /* run the lexical analysis automaton */
-    return 0;
+int main(int argc, char *argv[]) {
+  process_command(argc, argv);
+  yylex();    /* run the lexical analysis automaton */
+  return 0;
 }
 int yywrap() {  /* called on EOF, return 1 to terminate */
-    return 1;
+  return 1;
 }
