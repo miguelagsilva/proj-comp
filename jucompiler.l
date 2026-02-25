@@ -13,6 +13,12 @@ void process_command(int argc, char *argv[]) {
   else if (argc == 2) {
     if (strcmp(argv[1], "-l") == 0) {
       print_tokens = 1;
+    } else if (strcmp(argv[1], "-e1") == 0) {
+      print_tokens = 0;
+    } else {
+      printf("Unknown option: %s\n", argv[1]);
+      printf("Usage: %s [-l]\n", argv[0]);
+      exit(1);
     }
   } 
 }
