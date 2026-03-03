@@ -53,7 +53,7 @@ void handle_string(char *text, int len, int start_line, int start_col, int is_te
 
   if (!is_terminated) {
     printf("Line %d, col %d: unterminated string literal\n", start_line, start_col);
-  }else if (!has_errors) {
+  } else if (!has_errors) {
     print_token("STRLIT(%s)\n", text);
   }
 }
@@ -89,7 +89,7 @@ exponent ([eE][+-]?{seq_digits})
 %%
 {empty}                { }
 
-"true"|"false"          { print_token("BOOLLIT\n"); }
+"true"|"false"          { print_token("BOOLLIT(%s)\n", yytext); }
 "&&"                    { print_token("AND\n"); }
 "="                     { print_token("ASSIGN\n"); }
 "*"                     { print_token("STAR\n"); }
@@ -136,7 +136,7 @@ exponent ([eE][+-]?{seq_digits})
 
 "\n"                    { ; }
 
-0|({not_zero}(({digit}|"_")*{digit})?)               { print_token("NATURAL(%s)\n", yytext); } /* 1____010 aceita? */
+0|({not_zero}(({digit}|"_")*{digit})?)               { print_token("NATURAL(%s)\n", yytext); } 
 
 {seq_digits}"."{seq_digits}?{exponent}? |
 "."{seq_digits}{exponent}?               |
@@ -151,13 +151,12 @@ exponent ([eE][+-]?{seq_digits})
 
 "/*"                    { BEGIN(COMMENT); comment_start_line = line; comment_start_col = column - yyleng; }
 <COMMENT>"*/"           { BEGIN(INITIAL); }
-<COMMENT>\n|\r|\r\n             { }
+<COMMENT>\n|\r|\r\n     { }
 <COMMENT>.              { }
-<COMMENT><<EOF>>        {
-                          printf("Line %d, col %d: unterminated comment\n", comment_start_line, comment_start_col);
-                          BEGIN(INITIAL);
+<COMMENT><<EOF>>        { 
+                          printf("Line %d, col %d: unterminated comment\n", comment_start_line, comment_start_col); 
+                          BEGIN(INITIAL); 
                         }
-
 "//".*                  {}
 
 .                       { printf("Line %d, col %d: illegal character (%s)\n", line, column-yyleng, yytext);  }
