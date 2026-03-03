@@ -132,7 +132,7 @@ exponent ([eE][+-]?{seq_digits})
 "String"                { print_token("STRING\n"); }
 "void"                  { print_token("VOID\n"); }
 "while"                 { print_token("WHILE\n"); }
-"++"|"--"|"null"|"Integer"|"System"|"for" { print_token("RESERVED(%s)\n", yytext);}
+"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"switch"|"assert"|"default"|"package"|"synchronized"|"do"|"goto"|"private" { print_token("RESERVED(%s)\n", yytext);}
 
 "\n"                    { ; }
 
