@@ -57,3 +57,4 @@ dkms.conf
 lex.yy.c
 jucompiler
 *.out_temp
+jucompiler.zip
