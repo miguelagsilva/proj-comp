@@ -1,3 +1,10 @@
-"hello"
-"hello \n \p
-/* ola
+aa
+// adsdsadad \n
+/* safs */
+123.2
+class A {
+    int a;
+    void fun() {
+        // asdasd
+    }
+}

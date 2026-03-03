@@ -85,7 +85,6 @@ seq_digits {digit}(({digit}|_)*{digit})?
 exponent ([eE][+-]?{seq_digits})
 
 %X COMMENT
-%X S_COMMENT
 
 %%
 {empty}                { }
@@ -159,10 +158,7 @@ exponent ([eE][+-]?{seq_digits})
                           BEGIN(INITIAL);
                         }
 
-"//"                    { BEGIN(S_COMMENT); comment_start_line = line; comment_start_col = column -yyleng; }
-<S_COMMENT>\n|\r|\r\n           {BEGIN(INITIAL);}
-<S_COMMENT>.            {} /* Não usar estado*/
-
+"//".*                  {}
 
 .                       { printf("Line %d, col %d: illegal character (%s)\n", line, column-yyleng, yytext);  }
 
