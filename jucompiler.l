@@ -5,6 +5,8 @@
 int line = 1;
 int column = 1;
 int print_tokens = 0;
+int comment_start_line = 0;
+int comment_start_col = 0;
 
 /* C functions */
 void process_command(int argc, char *argv[]) {
@@ -30,6 +32,33 @@ void print_token(const char* fmt, ...) {
   va_end(args);
 }
 
+void handle_string(char *text, int len, int start_line, int start_col, int is_terminated) {
+  int has_errors = 0;
+
+  for (int i = 0; i < len; i++) {
+    if (text[i] == '\\' && i + 1 < len) {
+      char c = text[i+1];
+
+      if (c != 'f' && c != 'n' && c != 'r' && c != 't' && c != '\\' && c != '"') {
+        printf("Line %d, col %d: invalid escape sequence (\\%c)\n", start_line, start_col + i, c);
+        has_errors = 1;
+      }
+      i++;
+    }
+    else if (text[i] == '\\' && i + 1 == len) {
+      printf("Line %d, col %d: invalid escape sequence (\\)\n", start_line, start_col + 1);
+      has_errors = 1;
+    }
+  }
+
+  if (!is_terminated) {
+    printf("Line %d, col %d: unterminated string literal\n", start_line, start_col);
+  }else if (!has_errors) {
+    print_token("STRLIT(%s)\n", text);
+  }
+}
+
+
 /* Track line and column for every token */
 #define YY_USER_ACTION \
   do { \
@@ -49,14 +78,18 @@ letter     [a-zA-Z_$]
 digit      [0-9]
 not_zero   [1-9]
 stringlit   ([^\\\"\n\r]|\\[fnrt\\\"])*
+string_body  ([^\"\n\r\\]|\\[^\n\r])*\\?
 
 /* Decimal Macros */
 seq_digits {digit}(({digit}|_)*{digit})?
 exponent ([eE][+-]?{seq_digits})
 
 %X COMMENT
+%X S_COMMENT
 
 %%
+{empty}                { }
+
 "true"|"false"          { print_token("BOOLLIT\n"); }
 "&&"                    { print_token("AND\n"); }
 "="                     { print_token("ASSIGN\n"); }
@@ -100,9 +133,8 @@ exponent ([eE][+-]?{seq_digits})
 "String"                { print_token("STRING\n"); }
 "void"                  { print_token("VOID\n"); }
 "while"                 { print_token("WHILE\n"); }
-"++"|"--"|"null"|"Integer"|"System" { print_token("RESERVED\n"); }
+"++"|"--"|"null"|"Integer"|"System" { print_token("RESERVED(%s)\n", yytext);}
 
-{empty}                { ; }
 "\n"                    { ; }
 
 0|({not_zero}(({digit}|"_")*{digit})?)               { print_token("NATURAL(%s)\n", yytext); } /* 1____010 aceita? */
@@ -114,28 +146,25 @@ exponent ([eE][+-]?{seq_digits})
 {letter}({letter}|{digit})*        { print_token("IDENTIFIER(%s)\n", yytext); }
 
 
-\"{stringlit}\\[^fnrt\\\"\n\r]([^\\\"\n\r]|\\.)*\"  {
-  int start_column = column - yyleng;
-  for (int i = 1; i < yyleng - 1; i++) {
-    if (yytext[i] == '\\') {
-      char c = yytext[i+1];
-      if (!(c=='f' || c=='n' || c=='r' || c=='t' || c=='\\' || c=='"')) {
-        int pos = start_column + i;
-        printf("Line %d, col %d: invalid escape sequence (\\%c)\n", line, pos, c);
-        break;
-      }
-      i++;
-    }
-  }
-}
-\"{stringlit}\"  { print_token("STRLIT(%s)\n", yytext); }
+\"{string_body}\"   { handle_string(yytext, yyleng, line, column - yyleng, 1); }
+\"{string_body}     { handle_string(yytext, yyleng, line, column - yyleng, 0); }
 
-"/*"                    { BEGIN(COMMENT); }
-<COMMENT>.              { ECHO; }
-<COMMENT>\n             { printf(" "); }
+
+"/*"                    { BEGIN(COMMENT); comment_start_line = line; comment_start_col = column - yyleng; }
 <COMMENT>"*/"           { BEGIN(INITIAL); }
+<COMMENT>\n|\r|\r\n             { }
+<COMMENT>.              { }
+<COMMENT><<EOF>>        {
+                          printf("Line %d, col %d: unterminated comment\n", comment_start_line, comment_start_col);
+                          BEGIN(INITIAL);
+                        }
 
-.                       { printf("Line %d, col %d: unrecognized character (%s)\n", line, column-yyleng, yytext);  }
+"//"                    { BEGIN(S_COMMENT); comment_start_line = line; comment_start_col = column -yyleng; }
+<S_COMMENT>\n|\r|\r\n           {BEGIN(INITIAL);}
+<S_COMMENT>.            {} /* Não usar estado*/
+
+
+.                       { printf("Line %d, col %d: illegal character (%s)\n", line, column-yyleng, yytext);  }
 
 %%
 extern char *yytext;  /* the matched text */

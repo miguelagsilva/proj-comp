@@ -1,7 +1,3 @@
-1_______010
-_ola
-"cheira bem"
-10.e-92
-.93
-10e72
-++
+"hello"
+"hello \n \p
+/* ola
