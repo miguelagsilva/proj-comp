@@ -32,37 +32,10 @@ void print_token(const char* fmt, ...) {
   va_end(args);
 }
 
-void handle_string(char *text, int len, int start_line, int start_col, int is_terminated) {
-  int has_errors = 0;
-
-  for (int i = 0; i < len; i++) {
-    if (text[i] == '\\' && i + 1 < len) {
-      char c = text[i+1];
-
-      if (c != 'f' && c != 'n' && c != 'r' && c != 't' && c != '\\' && c != '"') {
-        printf("Line %d, col %d: invalid escape sequence (\\%c)\n", start_line, start_col + i, c);
-        has_errors = 1;
-      }
-      i++;
-    }
-    else if (text[i] == '\\' && i + 1 == len) {
-      printf("Line %d, col %d: invalid escape sequence (\\)\n", start_line, start_col + 1);
-      has_errors = 1;
-    }
-  }
-
-  if (!is_terminated) {
-    printf("Line %d, col %d: unterminated string literal\n", start_line, start_col);
-  } else if (!has_errors) {
-    print_token("STRLIT(%s)\n", text);
-  }
-}
-
-
 /* Track line and column for every token */
 #define YY_USER_ACTION \
   do { \
-    if (yytext[0] == '\n') { \
+    if (yytext[0] == '\n' || yytext[0] == '\r') { \
       line++; \
       column = 1; \
     } else { \
@@ -77,8 +50,15 @@ empty      [ \t\f\r]
 letter     [a-zA-Z_$]
 digit      [0-9]
 not_zero   [1-9]
-stringlit   ([^\\\"\n\r]|\\[fnrt\\\"])*
-string_body  ([^\"\n\r\\]|\\[^\n\r])*\\?
+
+/* String Macros */
+ESCAPE \\[^\n\r]
+VAL_ESCAPE \\[fnrt"\\]
+TEXT [^\"\n\r\\]
+
+STRLIT_OK \"({TEXT}|{VAL_ESCAPE})*\"
+STRLIT_BAD \"({TEXT}|{ESCAPE})*\"
+STRLIT_OPEN \"({TEXT}|{ESCAPE})*\\?
 
 /* Decimal Macros */
 seq_digits {digit}(({digit}|_)*{digit})?
@@ -136,6 +116,7 @@ exponent ([eE][+-]?{seq_digits})
 
 
 "\n"                    { ; }
+"\r\n"                  { ; }
 
 0|({not_zero}(({digit}|"_")*{digit})?)               { print_token("NATURAL(%s)\n", yytext); } 
 
@@ -146,19 +127,57 @@ exponent ([eE][+-]?{seq_digits})
 {letter}({letter}|{digit})*        { print_token("IDENTIFIER(%s)\n", yytext); }
 
 
-\"{string_body}\"   { handle_string(yytext, yyleng, line, column - yyleng, 1); }
-\"{string_body}     { handle_string(yytext, yyleng, line, column - yyleng, 0); }
+{STRLIT_OK} {
+    print_token("STRLIT(%s)\n", yytext);
+}
+
+{STRLIT_BAD} {
+    int i, start_col = column - yyleng;
+    for (i = 1; i < yyleng - 1; i++) {
+        if (yytext[i] == '\\') {
+            if (i == yyleng - 1) { 
+                 printf("Line %d, col %d: invalid escape sequence (\\)\n", line, start_col + i);
+            } else {
+                char c = yytext[i+1];
+                if (c != 'f' && c != 'n' && c != 'r' && c != 't' && c != '"' && c != '\\') {
+                  printf("Line %d, col %d: invalid escape sequence (\\%c)\n", line, start_col + i, c);
+                }
+                i++;
+            }
+        }
+    }
+}
+
+{STRLIT_OPEN} {
+    int i, start_col = column - yyleng;
+    for (i = 1; i < yyleng; i++) {
+        if (yytext[i] == '\\') {
+            if (i == yyleng - 1) { 
+                 printf("Line %d, col %d: invalid escape sequence (\\)\n", line, start_col + i);
+            } else {
+                char c = yytext[i+1];
+                if (c != 'f' && c != 'n' && c != 'r' && c != 't' && c != '"' && c != '\\') {
+                    printf("Line %d, col %d: invalid escape sequence (\\%c)\n", line, start_col + i, c);
+                }
+                i++;
+            }
+        }
+    }
+    printf("Line %d, col %d: unterminated string literal\n", line, start_col);
+}
 
 
 "/*"                    { BEGIN(COMMENT); comment_start_line = line; comment_start_col = column - yyleng; }
 <COMMENT>"*/"           { BEGIN(INITIAL); }
-<COMMENT>\n|\r|\r\n     { }
+<COMMENT>\r\n           { }
+<COMMENT>\r             { }
+<COMMENT>\n             { }
 <COMMENT>.              { }
 <COMMENT><<EOF>>        { 
                           printf("Line %d, col %d: unterminated comment\n", comment_start_line, comment_start_col); 
                           BEGIN(INITIAL); 
                         }
-"//".*                  {}
+"//"[^\r\n]*                  {}
 
 .                       { printf("Line %d, col %d: illegal character (%s)\n", line, column-yyleng, yytext);  }
 
