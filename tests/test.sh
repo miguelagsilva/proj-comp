@@ -43,8 +43,8 @@ if [[ -d java/meta1 ]]; then
 fi
 
 # meter java/ pq tirei para os teste da meta 1
-if [[ -d meta2 ]]; then
-    for inp in meta2/*.java; do
+if [[ -d java/meta2 ]]; then
+    for inp in java/meta2/*.java; do
         total=$(( $total + 1 ))
         echo "$inp"
         out=${inp%.java}.out

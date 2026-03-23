@@ -58,3 +58,5 @@ lex.yy.c
 jucompiler
 *.out_temp
 jucompiler.zip
+y.gv
+y.output

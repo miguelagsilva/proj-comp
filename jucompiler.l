@@ -1,12 +1,23 @@
 %{
 #include <stdarg.h>
 
+#include "y.tab.h"
+#include "ast.h"
+
+/* C functions */
+int yyparse(void);
+void yyerror(char *);
+
 /* C variables */
+extern struct node *ast;
+
 int line = 1;
 int column = 1;
 int print_tokens = 0;
 int comment_start_line = 0;
 int comment_start_col = 0;
+int syn_line = -1, syn_column = -1;
+int errors = 0;
 
 /* C functions */
 void process_command(int argc, char *argv[]) {
@@ -42,6 +53,9 @@ void print_token(const char* fmt, ...) {
       column += yyleng; \
     } \
   } while(0);
+/* We use this to return the values of tokens to parser */
+#define PASS_TOKEN() \
+  yylval.lexeme = strdup(yytext);
 
 %}
 
@@ -186,9 +200,16 @@ extern char *yytext;  /* the matched text */
 extern int yyleng;
 extern int yylex();
 
+
+void yyerror(char *error) {
+    errors++;
+    printf("Found %s '%s' (%d,%d)\n", error, yytext, syn_line, syn_column);
+}
 int main(int argc, char *argv[]) {
   process_command(argc, argv);
-  yylex();    /* run the lexical analysis automaton */
+  //yylex();    /* run the lexical analysis automaton */
+  yyparse();
+  //show(ast, 0);
   return 0;
 }
 int yywrap() {  /* called on EOF, return 1 to terminate */
