@@ -77,72 +77,73 @@ STRLIT_OPEN \"({TEXT}|{ESCAPE})*\\?
 /* Decimal Macros */
 seq_digits {digit}(({digit}|_)*{digit})?
 exponent ([eE][+-]?{seq_digits})
-
 %X COMMENT
 
 %%
 {empty}                { }
 
-"true"|"false"          { print_token("BOOLLIT(%s)\n", yytext); }
-"&&"                    { print_token("AND\n"); }
-"="                     { print_token("ASSIGN\n"); }
-"*"                     { print_token("STAR\n"); }
-","                     { print_token("COMMA\n"); }
-"/"                     { print_token("DIV\n"); }
-"=="                    { print_token("EQ\n"); }
-">="                    { print_token("GE\n"); }
-">"                     { print_token("GT\n"); }
-"{"                     { print_token("LBRACE\n"); }
-"<="                    { print_token("LE\n"); }
-"("                     { print_token("LPAR\n"); }
-"["                     { print_token("LSQ\n"); }
-"<"                     { print_token("LT\n"); }
-"-"                     { print_token("MINUS\n"); }
-"%"                     { print_token("MOD\n"); }
-"!="                    { print_token("NE\n"); }
-"!"                     { print_token("NOT\n"); }
-"||"                    { print_token("OR\n"); }
-"+"                     { print_token("PLUS\n"); }
-"}"                     { print_token("RBRACE\n"); }
-")"                     { print_token("RPAR\n"); }
-"]"                     { print_token("RSQ\n"); }
-";"                     { print_token("SEMICOLON\n"); }
-"->"                    { print_token("ARROW\n"); }
-"<<"                    { print_token("LSHIFT\n"); }
-">>"                    { print_token("RSHIFT\n"); }
-"^"                     { print_token("XOR\n"); }
-"boolean"               { print_token("BOOL\n"); }
-"class"                 { print_token("CLASS\n"); }
-".length"               { print_token("DOTLENGTH\n"); }
-"double"                { print_token("DOUBLE\n"); }
-"else"                  { print_token("ELSE\n"); }
-"if"                    { print_token("IF\n"); }
-"int"                   { print_token("INT\n"); }
-"System.out.print"      { print_token("PRINT\n"); }
-"Integer.parseInt"      { print_token("PARSEINT\n"); }
-"public"                { print_token("PUBLIC\n"); }
-"return"                { print_token("RETURN\n"); }
-"static"                { print_token("STATIC\n"); }
-"String"                { print_token("STRING\n"); }
-"void"                  { print_token("VOID\n"); }
-"while"                 { print_token("WHILE\n"); }
-"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"switch"|"assert"|"default"|"package"|"synchronized"|"do"|"goto"|"private"|"new"|"this"|"break"|"implements"|"protected"|"throw"|"byte"|"import"|"throws"|"case"|"enum"|"instanceof"|"transient"|"catch"|"extends"|"short"|"try"|"char"|"final"|"interface"|"finally"|"long"|"strictfp"|"volatile"|"const"|"float"|"native"|"super" { print_token("RESERVED(%s)\n", yytext);}
+"true"|"false"          { PASS_TOKEN(); print_token("BOOLLIT(%s)\n", yytext); return BOOLLIT; }
+"&&"                    { print_token("AND\n"); return AND; }
+"="                     { print_token("ASSIGN\n"); return ASSIGN; }
+"*"                     { print_token("STAR\n"); return STAR; }
+","                     { print_token("COMMA\n"); return COMMA; }
+"/"                     { print_token("DIV\n"); return DIV; }
+"=="                    { print_token("EQ\n"); return EQ; }
+">="                    { print_token("GE\n"); return GE; }
+">"                     { print_token("GT\n"); return GT; }
+"{"                     { print_token("LBRACE\n"); return LBRACE; }
+"<="                    { print_token("LE\n"); return LE; }
+"("                     { print_token("LPAR\n"); return LPAR; }
+"["                     { print_token("LSQ\n"); return LSQ; }
+"<"                     { print_token("LT\n"); return LT; }
+"-"                     { print_token("MINUS\n"); return MINUS; }
+"%"                     { print_token("MOD\n"); return MOD; }
+"!="                    { print_token("NE\n"); return NE; }
+"!"                     { print_token("NOT\n"); return NOT; }
+"||"                    { print_token("OR\n"); return OR; }
+"+"                     { print_token("PLUS\n"); return PLUS; }
+"}"                     { print_token("RBRACE\n"); return RBRACE; }
+")"                     { print_token("RPAR\n"); return RPAR; }
+"]"                     { print_token("RSQ\n"); return RSQ; }
+";"                     { print_token("SEMICOLON\n"); return SEMICOLON; }
+"->"                    { print_token("ARROW\n"); return ARROW; }
+"<<"                    { print_token("LSHIFT\n"); return LSHIFT; }
+">>"                    { print_token("RSHIFT\n"); return RSHIFT; }
+"^"                     { print_token("XOR\n"); return XOR; }
+"boolean"               { print_token("BOOL\n"); return BOOL; }
+"class"                 { print_token("CLASS\n"); return CLASS; }
+".length"               { print_token("DOTLENGTH\n"); return DOTLENGTH; }
+"double"                { print_token("DOUBLE\n"); return DOUBLE; }
+"else"                  { print_token("ELSE\n"); return ELSE; }
+"if"                    { print_token("IF\n"); return IF; }
+"int"                   { print_token("INT\n"); return INT; }
+"System.out.print"      { print_token("PRINT\n"); return PRINT; }
+"Integer.parseInt"      { print_token("PARSEINT\n"); return PARSEINT; }
+"public"                { print_token("PUBLIC\n"); return PUBLIC; }
+"return"                { print_token("RETURN\n"); return RETURN; }
+"static"                { print_token("STATIC\n"); return STATIC; }
+"String"                { print_token("STRING\n"); return STRING; }
+"void"                  { print_token("VOID\n"); return VOID; }
+"while"                 { print_token("WHILE\n"); return WHILE; }
+"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"switch"|"assert"|"default"|"package"|"synchronized"|"do"|"goto"|"private"|"new"|"this"|"break"|"implements"|"protected"|"throw"|"byte"|"import"|"throws"|"case"|"enum"|"instanceof"|"transient"|"catch"|"extends"|"short"|"try"|"char"|"final"|"interface"|"finally"|"long"|"strictfp"|"volatile"|"const"|"float"|"native"|"super" { PASS_TOKEN(); print_token("RESERVED(%s)\n", yytext); return RESERVED;}
 
 
 "\n"                    { ; }
 "\r\n"                  { ; }
 
-0|({not_zero}(({digit}|"_")*{digit})?)               { print_token("NATURAL(%s)\n", yytext); } 
+0|({not_zero}(({digit}|"_")*{digit})?)               { PASS_TOKEN(); print_token("NATURAL(%s)\n", yytext); return NATURAL; } 
 
 {seq_digits}"."{seq_digits}?{exponent}? |
 "."{seq_digits}{exponent}?               |
-{seq_digits}{exponent}               { print_token("DECIMAL(%s)\n", yytext); }
+{seq_digits}{exponent}               { PASS_TOKEN(); print_token("DECIMAL(%s)\n", yytext); return DECIMAL; }
 
-{letter}({letter}|{digit})*        { print_token("IDENTIFIER(%s)\n", yytext); }
+{letter}({letter}|{digit})* { PASS_TOKEN(); print_token("IDENTIFIER(%s)\n", yytext); return IDENTIFIER; }
 
 
 {STRLIT_OK} {
+    PASS_TOKEN();
     print_token("STRLIT(%s)\n", yytext);
+    return STRLIT;
 }
 
 {STRLIT_BAD} {
@@ -191,7 +192,7 @@ exponent ([eE][+-]?{seq_digits})
                           printf("Line %d, col %d: unterminated comment\n", comment_start_line, comment_start_col); 
                           BEGIN(INITIAL); 
                         }
-"//"[^\r\n]*                  {}
+"//"[^\r\n]*            { }
 
 .                       { printf("Line %d, col %d: illegal character (%s)\n", line, column-yyleng, yytext);  }
 
