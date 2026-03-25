@@ -15,7 +15,7 @@ struct node *ast;
 %token AND ASSIGN STAR COMMA DIV EQ GE GT LBRACE LE LPAR LSQ LT MINUS MOD NE NOT OR PLUS RBRACE RPAR RSQ SEMICOLON ARROW LSHIFT RSHIFT XOR BOOL CLASS DOTLENGTH DOUBLE ELSE IF INT PRINT PARSEINT PUBLIC RETURN STATIC STRING VOID WHILE
 %token<lexeme> BOOLLIT RESERVED NATURAL DECIMAL IDENTIFIER STRLIT
 %type<node> program programs methodDecl fieldDecl type methodHeader formalParams methodBody varDecl statement methodInvocation assignment parseArgs expr
-%type<node_list> program_content
+%type<node_list> program_content fieldDecl_content
 
 
 %left LOW
@@ -25,6 +25,7 @@ struct node *ast;
 %union{
     char *lexeme;
     struct node *node;
+    struct node_list *node_list
 }
 
 /* START grammar rules section -- BNF grammar */
@@ -35,7 +36,7 @@ programs: program                                                       { ast = 
 
 program: CLASS IDENTIFIER LBRACE program_content RBRACE                 { $$ = newnode(Program, NULL);
                                                                             addchild($$, newnode(Identifier, $2));
-                                                                            addchild($$, $4);    
+                                                                            addchildren($$, $4);    
     };
 
 program_content:                                                        { $$ = newlist(); }
@@ -49,13 +50,14 @@ program_content:                                                        { $$ = n
 methodDecl: PUBLIC STATIC methodHeader methodBody                       { $$ = newnode(MethodDecl, NULL); 
                                                                             addchild($$, $3);
                                                                             addchild($$, $4); }; 
-fieldDecl:  PUBLIC STATIC type IDENTIFIER fielDecl_content SEMICOLON    { $$ = newnode(FieldDecl, NULL);
+fieldDecl:  PUBLIC STATIC type IDENTIFIER fieldDecl_content SEMICOLON    { $$ = newnode(FieldDecl, NULL);
                                                                             addchild($$, $3);
                                                                             addchild($$, newnode(Identifier, $4));
+                                                                            addchildren($$, $5);
                                                                         } ;
-fielDecl_content:                                                       { $$ = newnode(FieldDecl_content, NULL); }        
-                |   COMMA IDENTIFIER                                    { $$ = $1;
-                                                                            addchild($$, newnode(Identifier, $2)); 
+fieldDecl_content:                                                       { $$ = newlist(); }        
+                |   COMMA IDENTIFIER                                    {
+                                                                            append($$, newnode(Identifier, $2)); 
                                                                         };
                                                                         
 type:       BOOL                                                        { $$ = newnode(Type, NULL); 
@@ -69,7 +71,7 @@ methodHeader:       type IDENTIFIER LPAR formalParams RPAR              { $$ = n
                                                                             addchild($$, $4);
                                                                         };
                 |   VOID IDENTIFIER LPAR formalParams RPAR              { $$ = newnode(MethodHeader, NULL); 
-                                                                            addchild($$, newnode(Void, $1));
+                                                                            addchild($$, newnode(Void, NULL));
                                                                             addchild($$, newnode(Identifier, $2));
                                                                             addchild($$, $4);
                                                                         };
