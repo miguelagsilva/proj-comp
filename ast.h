@@ -45,19 +45,17 @@ enum category {
     "Assignment", \
     "ParseArgs", \
     "Expr", \
-\
     "Boollit", \
     "Reserved", \
     "Natural", \
     "Decimal", \
-    "Identifier", \
+    "Id", \
     "Strlit", \
-\
     "And", "Assign", "Star", "Div", "Eq", "Ge", "Gt", "Le", "Lt", \
     "Minus", "Mod", "Ne", "Not", "Or", "Plus", "Arrow", "Lshift", \
     "Rshift", "Xor", "Dotlength", \
     "Comma", "Lbrace", "Lpar", "Lsq", "Rbrace", "Rpar", "Rsq", "Semicolon", \
-    "Bool", "Class", "Double", "Else", "If", "Int", "Print", "Parseint", \
+    "Bool", "Double", "Else", "If", "Int", "Print", "Parseint", \
     "Public", "Return", "Static", "String", "Void", "While" \
 }
 

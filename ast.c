@@ -74,14 +74,15 @@ void show(struct node *node, int depth) {
     if (node == NULL) return;
 
     for (int i = 0; i < depth; i++) {
-        printf("__");
+        printf("..");
     }
 
-    printf("%s  [%d]", category_names[node->category], node->category);
+    printf("%s", category_names[node->category]);
 
     if (node->token != NULL) {
         printf("(%s)", node->token);
     }
+    printf(" [%d]", node->category);
     printf("\n");
 
     struct node_list *child_ptr = node->children->next;

@@ -1,10 +1,5 @@
-aa
-// adsdsadad \n
-/* safs */
-123.2
-class A {
-    int a;
-    void fun() {
-        // asdasd
-    }
+class test {;;;;;;
+  public static int a;
+  public static double a;
+  public static boolean a;
 }
