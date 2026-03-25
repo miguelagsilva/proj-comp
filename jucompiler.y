@@ -76,13 +76,13 @@ methodHeader:       type IDENTIFIER LPAR methodParams RPAR              { $$ = n
                                                                             addchild($$, $4);
                                                                         };
 
-methodParams:                                                           { $$ = newnode(FormalParams, NULL); }
-                |   type IDENTIFIER methodParams_content                { $$ = newnode(FormalParams, NULL);
+methodParams:                                                           { $$ = newnode(MethodParams, NULL); }
+                |   type IDENTIFIER methodParams_content                { $$ = newnode(MethodParams, NULL);
                                                                             addchild($$, $1);
                                                                             addchild($$, newnode(Identifier, $2));
                                                                             addchildren($$, $3);
                                                                         }  
-                |   STRING LSQ RSQ IDENTIFIER                           { $$ = newnode(FormalParams, NULL);
+                |   STRING LSQ RSQ IDENTIFIER                           { $$ = newnode(MethodParams, NULL);
                                                                             addchild($$, newnode(Identifier, $4));
                                                                         };    
 
