@@ -7,7 +7,7 @@ enum category {
     FieldDecl, 
     Type, 
     MethodHeader, 
-    FormalParams, 
+    MethodParams, 
     MethodBody, 
     VarDecl, 
     Statement, 
@@ -37,7 +37,7 @@ enum category {
     "FieldDecl", \
     "Type", \
     "MethodHeader", \
-    "FormalParams", \
+    "MethodParams", \
     "MethodBody", \
     "VarDecl", \
     "Statement", \

@@ -14,8 +14,8 @@ struct node *ast;
 
 %token AND ASSIGN STAR COMMA DIV EQ GE GT LBRACE LE LPAR LSQ LT MINUS MOD NE NOT OR PLUS RBRACE RPAR RSQ SEMICOLON ARROW LSHIFT RSHIFT XOR BOOL CLASS DOTLENGTH DOUBLE ELSE IF INT PRINT PARSEINT PUBLIC RETURN STATIC STRING VOID WHILE
 %token<lexeme> BOOLLIT RESERVED NATURAL DECIMAL IDENTIFIER STRLIT
-%type<node> program programs methodDecl fieldDecl type methodHeader formalParams methodBody varDecl statement methodInvocation assignment parseArgs expr
-%type<node_list> program_content fieldDecl_content formalParams_content
+%type<node> program programs methodDecl fieldDecl type methodHeader methodParams methodBody varDecl statement methodInvocation assignment parseArgs expr
+%type<node_list> program_content fieldDecl_content methodParams_content methodBody_content
 
 
 %left LOW
@@ -25,7 +25,7 @@ struct node *ast;
 %union{
     char *lexeme;
     struct node *node;
-    struct node_list *node_list
+    struct node_list *node_list;
 }
 
 /* START grammar rules section -- BNF grammar */
@@ -65,18 +65,19 @@ type:       BOOL                                                        { $$ = n
         |   INT                                                         { $$ = newnode(Int, NULL); }
         |   DOUBLE                                                      { $$ = newnode(Double, NULL); };
 
-methodHeader:       type IDENTIFIER LPAR formalParams RPAR              { $$ = newnode(MethodHeader, NULL); 
+methodHeader:       type IDENTIFIER LPAR methodParams RPAR              { $$ = newnode(MethodHeader, NULL); 
                                                                             addchild($$, $1);
                                                                             addchild($$, newnode(Identifier, $2));
                                                                             addchild($$, $4);
                                                                         }
-                |   VOID IDENTIFIER LPAR formalParams RPAR              { $$ = newnode(MethodHeader, NULL); 
+                |   VOID IDENTIFIER LPAR methodParams RPAR              { $$ = newnode(MethodHeader, NULL); 
                                                                             addchild($$, newnode(Void, NULL));
                                                                             addchild($$, newnode(Identifier, $2));
                                                                             addchild($$, $4);
                                                                         };
 
-formalParams:       type IDENTIFIER formalParams_content                { $$ = newnode(FormalParams, NULL);
+methodParams:                                                           { $$ = newnode(FormalParams, NULL); }
+                |   type IDENTIFIER methodParams_content                { $$ = newnode(FormalParams, NULL);
                                                                             addchild($$, $1);
                                                                             addchild($$, newnode(Identifier, $2));
                                                                             addchildren($$, $3);
@@ -85,13 +86,21 @@ formalParams:       type IDENTIFIER formalParams_content                { $$ = n
                                                                             addchild($$, newnode(Identifier, $4));
                                                                         };    
 
-formalParams_content:                                                   { $$ = newlist(); }
-                |     formalParams_content COMMA type IDENTIFIER        { $$ = $1;
+methodParams_content:                                                   { $$ = newlist(); }
+                |     methodParams_content COMMA type IDENTIFIER        { $$ = $1;
                                                                             append($$, $3);
                                                                             append($$, newnode(Identifier, $4));
-                                                                        }  
+                                                                        };
 
-methodBody:     { $$ = NULL; } ;
+methodBody:     LBRACE methodBody_content RBRACE                        { $$ = newnode(MethodBody, NULL);
+                                                                          addchildren($$, $2); } ;
+
+methodBody_content:                                                     { $$ = newlist(); }
+                | methodBody_content statement                          { $$ = $1;
+                                                                          append($$, $2); }
+                | methodBody_content varDecl                            { $$ = $1;
+                                                                          append($$, $2); };
+
 varDecl:        { $$ = NULL; } ;
 statement:      { $$ = NULL; } ;
 methodInvocation: { $$ = NULL; } ;
