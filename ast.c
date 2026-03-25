@@ -24,42 +24,52 @@ void addchild(struct node *parent, struct node *child) {
     children->next = new;
 }
 
-const char *category_names[] = {
-    // Não-terminais
-    "Program", 
-    "MethodDecl", 
-    "FieldDecl", 
-    "Type", 
-    "MethodHeader", 
-    "FormalParams", 
-    "MethodBody", 
-    "VarDecl", 
-    "Statement", 
-    "MethodInvocation", 
-    "Assignment", 
-    "ParseArgs", 
-    "Expr",
-    "program_content",
+// get a pointer to a specific child, numbered 0, 1, 2, ...
+struct node *getchild(struct node *parent, int position) {
+    struct node_list *children = parent->children;
+    while((children = children->next) != NULL)
+        if(position-- == 0)
+            return children->node;
+    return NULL;
+}
 
-    // Literais
-    "BOOLLIT", 
-    "RESERVED", 
-    "NATURAL", 
-    "DECIMAL", 
-    "IDENTIFIER", 
-    "STRLIT",
+// count the children of a node
+int countchildren(struct node *node) {
+    int i = 0;
+    while(getchild(node, i) != NULL)
+        i++;
+    return i;
+}
 
-    // Operadores
-    "AND", "ASSIGN", "STAR", "DIV", "EQ", "GE", "GT", "LE", "LT", 
-    "MINUS", "MOD", "NE", "NOT", "OR", "PLUS", "ARROW", "LSHIFT", 
-    "RSHIFT", "XOR", "DOTLENGTH",
-    
-    "COMMA", "LBRACE", "LPAR", "LSQ", "RBRACE", "RPAR", "RSQ", "SEMICOLON",
-    
-    // Palavras-chave / Tipos
-    "BOOL", "CLASS", "DOUBLE", "ELSE", "IF", "INT", "PRINT", "PARSEINT", 
-    "PUBLIC", "RETURN", "STATIC", "STRING", "VOID", "WHILE"
-};
+// create an empty list
+struct node_list *newlist() {
+    struct node_list *new = malloc(sizeof(struct node_list));
+    new->node = NULL;
+    new->next = NULL;
+    return new;
+}
+
+// append a node to a list of nodes
+void append(struct node_list *list, struct node *node) {
+    struct node_list *new = malloc(sizeof(struct node_list));
+    new->node = node;
+    new->next = NULL;
+    while(list->next != NULL)
+        list = list->next;
+    list->next = new;
+}
+
+// append a list of nodes as children of the given node
+void addchildren(struct node *node, struct node_list *list) {
+    struct node_list *children = node->children;
+    while(children->next != NULL)
+        children = children->next;
+    children->next = list->next;
+    free(list);
+}
+
+const char *category_names[] = names;
+
 void show(struct node *node, int depth) {
     if (node == NULL) return;
 

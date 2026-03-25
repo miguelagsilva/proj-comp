@@ -60,3 +60,5 @@ jucompiler
 jucompiler.zip
 y.gv
 y.output
+y.tab.c
+y.tab.h
