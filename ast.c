@@ -66,7 +66,7 @@ void show(struct node *node, int depth) {
         printf("__");
     }
 
-    printf("%s", category_names[node->category]);
+    printf("%s  [%d]", category_names[node->category], node->category);
 
     if (node->token != NULL) {
         printf("(%s)", node->token);
