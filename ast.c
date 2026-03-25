@@ -25,11 +25,40 @@ void addchild(struct node *parent, struct node *child) {
 }
 
 const char *category_names[] = {
-    "Program", "Function", "Parameters", "Parameter", "Arguments", 
-    "Integer", "Double", "Identifier", "Natural", "Decimal", 
-    "Call", "If", "Add", "Sub", "Mul", "Div"
-};
+    // Não-terminais
+    "Program", 
+    "MethodDecl", 
+    "FieldDecl", 
+    "Type", 
+    "MethodHeader", 
+    "FormalParams", 
+    "MethodBody", 
+    "VarDecl", 
+    "Statement", 
+    "MethodInvocation", 
+    "Assignment", 
+    "ParseArgs", 
+    "Expr",
 
+    // Literais
+    "BOOLLIT", 
+    "RESERVED", 
+    "NATURAL", 
+    "DECIMAL", 
+    "IDENTIFIER", 
+    "STRLIT",
+
+    // Operadores
+    "AND", "ASSIGN", "STAR", "DIV", "EQ", "GE", "GT", "LE", "LT", 
+    "MINUS", "MOD", "NE", "NOT", "OR", "PLUS", "ARROW", "LSHIFT", 
+    "RSHIFT", "XOR", "DOTLENGTH",
+    
+    "COMMA", "LBRACE", "LPAR", "LSQ", "RBRACE", "RPAR", "RSQ", "SEMICOLON",
+    
+    // Palavras-chave / Tipos
+    "BOOL", "CLASS", "DOUBLE", "ELSE", "IF", "INT", "PRINT", "PARSEINT", 
+    "PUBLIC", "RETURN", "STATIC", "STRING", "VOID", "WHILE"
+};
 void show(struct node *node, int depth) {
     if (node == NULL) return;
 
