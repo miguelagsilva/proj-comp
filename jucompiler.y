@@ -12,9 +12,9 @@ struct node *ast;
 
 %}
 
-%token INTEGER DOUBLE IF THEN ELSE
-%token<lexeme> IDENTIFIER NATURAL DECIMAL
-%type<node> program function functions parameters parameter arguments expression
+%token AND ASSIGN STAR COMMA DIV EQ GE GT LBRACE LE LPAR LSQ LT MINUS MOD NE NOT OR PLUS RBRACE RPAR RSQ SEMICOLON ARROW LSHIFT RSHIFT XOR BOOL CLASS DOTLENGTH DOUBLE ELSE IF INT PRINT PARSEINT PUBLIC RETURN STATIC STRING VOID WHILE
+%token<lexeme> BOOLLIT RESERVED NATURAL DECIMAL IDENTIFIER STRLIT
+%type<node> Program MethodDecl FieldDecl Type MethodHeader FormalParams FormalParams MethodBody VarDecl Statement MethodInvocation Assignment ParseArgs Expr
 
 %left LOW
 %left '+' '-'
@@ -29,8 +29,17 @@ struct node *ast;
 
 %%
 
-program: functions                  { ast = $$ = $1; 
-                                      ast->category = Program; }
+program: CLASS IDENTIFIER LBRACE program_content RBRACE                  { ast = $$ = $1; 
+                                                                           ast->category = Program; }
+    ;
+
+program_content:                            { $$ = newnode(program_content, NULL); }
+            | program_content MethodDecl    { $$ = $1;
+                                              addchild($$, $2); }
+            | program_content FieldDecl     { $$ = $1;
+                                              addchild($$, $2); }
+            | program_content SEMICOLON     { $$ = $1;
+                                              addchild($$, $2); }
     ;
 
 functions: function                 { $$ = newnode(Program, NULL); 
