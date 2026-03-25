@@ -16,19 +16,19 @@ enum category {
     ParseArgs, 
     Expr,
 
-    BOOLLIT, 
-    RESERVED, 
-    NATURAL, 
-    DECIMAL, 
-    IDENTIFIER, 
-    STRLIT,
+    Boollit, 
+    Reserved, 
+    Natural, 
+    Decimal, 
+    Identifier, 
+    Strlit,
 
-    AND, ASSIGN, STAR, DIV, EQ, GE, GT, LE, LT, 
-    MINUS, MOD, NE, NOT, OR, PLUS, ARROW, LSHIFT, 
-    RSHIFT, XOR, DOTLENGTH,
-    COMMA, LBRACE, LPAR, LSQ, RBRACE, RPAR, RSQ, SEMICOLON,
-    BOOL, CLASS, DOUBLE, ELSE, IF, INT, PRINT, PARSEINT, 
-    PUBLIC, RETURN, STATIC, STRING, VOID, WHILE,
+    And, Assign, Star, Div, Eq, Ge, Gt, Le, Lt, 
+    Minus, Mod, Ne, Not, Or, Plus, Arrow, Lshift, 
+    Rshift, Xor, Dotlength,
+    Comma, Lbrace, Lpar, Lsq, Rbrace, Rpar, Rsq, Semicolon,
+    Bool, Double, Else, If, Int, Print, Parseint, 
+    Public, Return, Static, String, Void, While,
 };
 
 struct node {
