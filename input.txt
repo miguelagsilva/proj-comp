@@ -1,5 +1,7 @@
 class test {;;;;;;
   public static int a;
-  public static double a;
-  public static boolean a;
+  public static double b;
+  public static boolean c,d,e,f,g;;;
+
+  int f_a () {};
 }
