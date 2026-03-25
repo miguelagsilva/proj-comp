@@ -210,7 +210,7 @@ int main(int argc, char *argv[]) {
   process_command(argc, argv);
   //yylex();    /* run the lexical analysis automaton */
   yyparse();
-  //show(ast, 0);
+  show(ast, 0);
   return 0;
 }
 int yywrap() {  /* called on EOF, return 1 to terminate */

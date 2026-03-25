@@ -39,6 +39,7 @@ const char *category_names[] = {
     "Assignment", 
     "ParseArgs", 
     "Expr",
+    "program_content"
 
     // Literais
     "BOOLLIT", 
