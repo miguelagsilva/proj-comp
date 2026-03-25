@@ -75,7 +75,20 @@ methodHeader:       type IDENTIFIER LPAR formalParams RPAR              { $$ = n
                                                                             addchild($$, newnode(Identifier, $2));
                                                                             addchild($$, $4);
                                                                         };
-formalParams:   { $$ = NULL; } ;
+formalParams:       type IDENTIFIER formalParams_content                { $$ = newnode(FormalParams, NULL);
+                                                                            addchild($$, $1);
+                                                                            addchild($$, newnode(Identifier, $2));
+                                                                            addchildren($$, $3);
+                                                                        };  
+                |   STRING LSQ RSQ IDENTIFIER                           { $$ = newnode(FormalParams, NULL);
+                                                                            addchild($$, newnode(Identifier, $4));
+                                                                        };    
+
+formalParams_content:                                                   { $$ = newlist(); }
+                |     formalParams_content COMMA type IDENTIFIER        { $$ =  
+
+                }
+
 methodBody:     { $$ = NULL; } ;
 varDecl:        { $$ = NULL; } ;
 statement:      { $$ = NULL; } ;
