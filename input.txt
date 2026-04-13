@@ -5,5 +5,5 @@ class test {;;;;;;
 
   public static int f_a () {};
   public static void main(String[] args) {};
-  public static double f_b (int x) {};
+  public static double f_b (int x, int y, int ll) {};
 }
