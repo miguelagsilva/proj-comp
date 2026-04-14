@@ -14,6 +14,10 @@ extern struct node *ast;
 int line = 1;
 int column = 1;
 int print_tokens = 0;
+int flag_l = 0;
+int flag_e1 = 0;
+int flag_t = 0;
+int flag_e2 = 0;
 int comment_start_line = 0;
 int comment_start_col = 0;
 int syn_line = -1, syn_column = -1;
@@ -21,19 +25,18 @@ int errors = 0;
 
 /* C functions */
 void process_command(int argc, char *argv[]) {
-  if (argc > 2)        
-    printf("Usage: %s [-l]\n", argv[0]);
+  if (argc > 2)
+    printf("Usage: %s [-l|-e1|-t|-e2]\n", argv[0]);
   else if (argc == 2) {
-    if (strcmp(argv[1], "-l") == 0) {
-      print_tokens = 1;
-    } else if (strcmp(argv[1], "-e1") == 0) {
-      print_tokens = 0;
-    } else {
+    if      (strcmp(argv[1], "-l")  == 0) flag_l  = 1;
+    else if (strcmp(argv[1], "-e1") == 0) flag_e1 = 1;
+    else if (strcmp(argv[1], "-t")  == 0) flag_t  = 1;
+    else if (strcmp(argv[1], "-e2") == 0) flag_e2 = 1;
+    else {
       printf("Unknown option: %s\n", argv[1]);
-      printf("Usage: %s [-l]\n", argv[0]);
       exit(1);
     }
-  } 
+  }
 }
 void print_token(const char* fmt, ...) {
   if (!print_tokens) return;
@@ -208,9 +211,21 @@ void yyerror(char *error) {
 }
 int main(int argc, char *argv[]) {
   process_command(argc, argv);
-  //yylex();    /* run the lexical analysis automaton */
+
+  if (flag_l || flag_e1) {
+    print_tokens = flag_l;  // only print tokens if -l
+    while (yylex() != 0);   // run lexer only
+    return 0;
+  }
+
+  // all other flags: run full parse
   yyparse();
-  show(ast, 0);
+
+  if ((flag_t) && errors == 0) {
+    show(ast, 0);
+  }
+
+  // no flag: only errors were already printed by yyerror/lexer
   return 0;
 }
 int yywrap() {  /* called on EOF, return 1 to terminate */

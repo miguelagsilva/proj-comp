@@ -82,7 +82,7 @@ void show(struct node *node, int depth) {
     if (node->token != NULL) {
         printf("(%s)", node->token);
     }
-    printf(" [%d]", node->category);
+    //printf(" [%d]", node->category); // DEBUG purposes
     printf("\n");
 
     struct node_list *child_ptr = node->children->next;
