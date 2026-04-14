@@ -91,3 +91,10 @@ void show(struct node *node, int depth) {
         child_ptr = child_ptr->next;
     }
 }
+
+void appendlist(struct node_list *dst, struct node_list *src) {
+    while (src != NULL) {
+        append(dst, src->node);
+        src = src->next;
+    }
+}

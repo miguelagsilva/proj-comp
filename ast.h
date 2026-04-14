@@ -16,7 +16,7 @@ enum category {
     ParseArgs, 
     Expr,
 
-    Boollit, 
+    BoolLit, 
     Reserved, 
     DecLit, 
     RealLit, 
@@ -47,7 +47,7 @@ enum category {
     "Assignment", \
     "ParseArgs", \
     "Expr", \
-    "Boollit", \
+    "BoolLit", \
     "Reserved", \
     "DecLit", \
     "RealLit", \
@@ -81,4 +81,5 @@ struct node_list *newlist();
 void append(struct node_list *list, struct node *node);
 void addchildren(struct node *node, struct node_list *list);
 void show(struct node *node, int depth);
+void appendlist(struct node_list *dst, struct node_list *src);
 #endif
