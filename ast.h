@@ -18,17 +18,19 @@ enum category {
 
     Boollit, 
     Reserved, 
-    Natural, 
-    Decimal, 
+    DecLit, 
+    RealLit, 
     Identifier, 
-    Strlit,
+    StrLit,
 
-    And, Assign, Star, Div, Eq, Ge, Gt, Le, Lt, 
+    And, Assign, Star, Div, Mul, Eq, Ge, Gt, Le, Lt, 
     Minus, Mod, Ne, Not, Or, Plus, Arrow, Lshift, 
     Rshift, Xor, Dotlength,
     Comma, Lbrace, Lpar, Lsq, Rbrace, Rpar, Rsq, Semicolon,
     Bool, Double, Else, If, Int, Print, Parseint, 
     Public, Return, Static, String, Void, While,
+
+    Block, Call, StringArray, ParamDecl
 };
 
 #define names { \
@@ -47,16 +49,17 @@ enum category {
     "Expr", \
     "Boollit", \
     "Reserved", \
-    "Natural", \
-    "Decimal", \
+    "DecLit", \
+    "RealLit", \
     "Id", \
-    "Strlit", \
-    "And", "Assign", "Star", "Div", "Eq", "Ge", "Gt", "Le", "Lt", \
+    "StrLit", \
+    "And", "Assign", "Star", "Div", "Mul", "Eq", "Ge", "Gt", "Le", "Lt", \
     "Minus", "Mod", "Ne", "Not", "Or", "Plus", "Arrow", "Lshift", \
     "Rshift", "Xor", "Dotlength", \
     "Comma", "Lbrace", "Lpar", "Lsq", "Rbrace", "Rpar", "Rsq", "Semicolon", \
     "Bool", "Double", "Else", "If", "Int", "Print", "Parseint", \
-    "Public", "Return", "Static", "String", "Void", "While" \
+    "Public", "Return", "Static", "String", "Void", "While", \
+    "Block", "Call", "StringArray", "ParamDecl" \
 }
 
 struct node {

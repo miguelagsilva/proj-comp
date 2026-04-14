@@ -14,13 +14,23 @@ struct node *ast;
 
 %token AND ASSIGN STAR COMMA DIV EQ GE GT LBRACE LE LPAR LSQ LT MINUS MOD NE NOT OR PLUS RBRACE RPAR RSQ SEMICOLON ARROW LSHIFT RSHIFT XOR BOOL CLASS DOTLENGTH DOUBLE ELSE IF INT PRINT PARSEINT PUBLIC RETURN STATIC STRING VOID WHILE
 %token<lexeme> BOOLLIT RESERVED NATURAL DECIMAL IDENTIFIER STRLIT
-%type<node> program programs methodDecl fieldDecl type methodHeader methodParams methodBody varDecl statement methodInvocation assignment parseArgs expr statement_else
-%type<node_list> program_content fieldDecl_content methodParams_content methodBody_content varDecl_content 
+%type<node> program programs methodDecl fieldDecl type methodHeader methodParams methodBody varDecl statement methodInvocation assignment parseArgs expr paramDecl
+%type<node_list> program_content fieldDecl_content methodParams_content methodBody_content varDecl_content statement_list expr_list 
 
 
-%left LOW
-%left '+' '-'
-%left '*' '/'
+%right ASSIGN
+%left OR
+%left XOR
+%left AND
+%left EQ NE
+%left LT LE GT GE
+%left LSHIFT RSHIFT
+%left PLUS MINUS
+%left STAR DIV MOD
+%left DOTLENGTH
+
+%nonassoc LOWER_THAN_ELSE
+%nonassoc ELSE
 
 %union{
     char *lexeme;
@@ -29,6 +39,11 @@ struct node *ast;
 }
 
 /* START grammar rules section -- BNF grammar */
+
+/*Block
+  2 - para todos
+  1 - ???
+  0 - se for obrigatorio */
 
 %%
 programs: program                                                       { ast = $$ = $1;
@@ -76,21 +91,28 @@ methodHeader:       type IDENTIFIER LPAR methodParams RPAR              { $$ = n
                                                                             addchild($$, $4);
                                                                         };
 
-methodParams:                                                           { $$ = newnode(MethodParams, NULL); }
-                |   type IDENTIFIER methodParams_content                { $$ = newnode(MethodParams, NULL);
-                                                                            addchild($$, $1);
-                                                                            addchild($$, newnode(Identifier, $2));
-                                                                            addchildren($$, $3);
-                                                                        }  
-                |   STRING LSQ RSQ IDENTIFIER                           { $$ = newnode(MethodParams, NULL);
-                                                                            addchild($$, newnode(Identifier, $4));
-                                                                        };    
+methodParams:   /* empty */
+                { $$ = newnode(MethodParams, NULL); }
+            |   paramDecl methodParams_content
+                { $$ = newnode(MethodParams, NULL);
+                  addchild($$, $1);
+                  addchildren($$, $2); }
+            |   STRING LSQ RSQ IDENTIFIER
+                { struct node *pd = newnode(ParamDecl, NULL);
+                  addchild(pd, newnode(StringArray, NULL));
+                  addchild(pd, newnode(Identifier, $4));
+                  $$ = newnode(MethodParams, NULL);
+                  addchild($$, pd); };
 
-methodParams_content:                                                   { $$ = newlist(); }
-                |     methodParams_content COMMA type IDENTIFIER        { $$ = $1;
-                                                                            append($$, $3);
-                                                                            append($$, newnode(Identifier, $4));
-                                                                        };
+paramDecl: type IDENTIFIER
+           { $$ = newnode(ParamDecl, NULL);
+             addchild($$, $1);
+             addchild($$, newnode(Identifier, $2)); };
+
+methodParams_content:   /* empty */
+                        { $$ = newlist(); }
+                    |   methodParams_content COMMA paramDecl
+                        { $$ = $1; append($$, $3); };
 
 methodBody:     LBRACE methodBody_content RBRACE                        { $$ = newnode(MethodBody, NULL);
                                                                           addchildren($$, $2); } ;
@@ -114,7 +136,7 @@ varDecl_content:                                                        { $$ = n
 
 statement: LBRACE statement_list RBRACE                                 { $$ = newnode(Block, NULL);
                                                                           addchildren($$, $2); }
-         | IF LPAR expr RPAR statement                                  { $$ = newnode(If, NULL);
+         | IF LPAR expr RPAR statement  %prec LOWER_THAN_ELSE           { $$ = newnode(If, NULL);
                                                                           addchild($$, $3);
                                                                           addchild($$, $5);
                                                                         }
@@ -127,10 +149,10 @@ statement: LBRACE statement_list RBRACE                                 { $$ = n
                                                                           addchild($$, $3);
                                                                           addchild($$, $5);
                                                                         }
-         | RETURN expr SEMICOLON                                        { $$ = newNode(Return, NULL); 
+         | RETURN expr SEMICOLON                                        { $$ = newnode(Return, NULL); 
                                                                           addchild($$, $2);
                                                                         }
-         | RETURN SEMICOLON                                             { $$ = newNode(Return, NULL); }
+         | RETURN SEMICOLON                                             { $$ = newnode(Return, NULL); }
          | methodInvocation SEMICOLON                                   { $$ = $1; }
          | assignment SEMICOLON                                         { $$ = $1; }
          | parseArgs SEMICOLON                                          { $$ = $1; }
@@ -138,18 +160,32 @@ statement: LBRACE statement_list RBRACE                                 { $$ = n
                                                                           addchild($$, $3); 
                                                                         }
          | PRINT LPAR STRLIT RPAR SEMICOLON                             { $$ = newnode(Print, NULL); 
-                                                                          addchild($$, newnode(Strlit, $3)); 
+                                                                          addchild($$, newnode(StrLit, $3)); 
                                                                         };
 
-methodInvocation: IDENTIFIER LPAR RPAR                                  { $$ = newnode(Call, $1); } ;
+statement_list:                                                         { $$ = newlist(); }
+                | statement_list statement                              { $$ = $1;
+                                                                          append($$, $2); 
+                                                                        };
 
-assignment:     { $$ = NULL; } ;
+methodInvocation: IDENTIFIER LPAR RPAR                                  { $$ = newnode(Call, $1);
+                                                                          addchild($$, newnode(Identifier, $1));  
+                                                                        }
+                | IDENTIFIER LPAR expr_list RPAR                        { $$ = newnode(Call, NULL);
+                                                                          addchild($$, newnode(Identifier, $1)); 
+                                                                          addchildren($$, $3);
+                                                                        };
 
-/*2 - para todos
-  1 - ???
-  0 - se for obrigatorio */
+assignment: IDENTIFIER ASSIGN expr                                      { $$ = newnode(Assign, NULL);
+                                                                          addchild($$, newnode(Identifier, $1));
+                                                                          addchild($$, $3);
+                                                                        } ;
 
-parseArgs:      { $$ = NULL; } ;
+
+parseArgs: PARSEINT LPAR IDENTIFIER LSQ expr RSQ RPAR                   { $$ = newnode(ParseArgs, NULL);
+                                                                          addchild($$, newnode(Identifier, $3));
+                                                                          addchild($$, $5);  
+                                                                        } ;
 
 expr: expr PLUS expr                    { $$ = newnode(Plus, NULL); addchild($$, $1); addchild($$, $3); }
     | expr MINUS expr                   { $$ = newnode(Minus, NULL); addchild($$, $1); addchild($$, $3); }
@@ -173,10 +209,17 @@ expr: expr PLUS expr                    { $$ = newnode(Plus, NULL); addchild($$,
     | assignment                        { $$ = $1; }
     | parseArgs                         { $$ = $1; }
     | IDENTIFIER                        { $$ = newnode(Identifier, $1); }
-    | IDENTIFIER DOTLENGTH              { $$ = newnode(Length, NULL); addchild($$, newnode(Identifier, $1)); }
-    | NATURAL                           { $$ = newnode(Natural, $1); }
-    | DECIMAL                           { $$ = newnode(Decimal, $1); }
+    | IDENTIFIER DOTLENGTH              { $$ = newnode(Dotlength, NULL); addchild($$, newnode(Identifier, $1)); }
+    | NATURAL                           { $$ = newnode(DecLit, $1); }
+    | DECIMAL                           { $$ = newnode(RealLit, $1); }
     | BOOLLIT                           { $$ = newnode(Boollit, $1); };
+
+expr_list: expr                                                         { $$ = newlist(); 
+                                                                          append($$, $1); 
+                                                                        }
+         | expr_list COMMA expr                                         { $$ = $1; 
+                                                                          append($$, $3);
+                                                                        };
 
 %%
 
