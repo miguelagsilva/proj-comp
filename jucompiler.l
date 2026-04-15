@@ -195,7 +195,14 @@ exponent ([eE][+-]?{seq_digits})
 <COMMENT>.              { }
 <COMMENT><<EOF>>        { 
                           printf("Line %d, col %d: unterminated comment\n", comment_start_line, comment_start_col); 
-                          BEGIN(INITIAL); 
+                          syn_line = line;
+                          syn_col = column;
+                          return 0; 
+                        }
+<<EOF>>                 { 
+                          syn_line = line;
+                          syn_col = column;
+                          return 0; 
                         }
 "//"[^\r\n]*            { }
 
