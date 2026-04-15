@@ -24,8 +24,8 @@ enum category {
     StrLit,
 
     And, Assign, Star, Div, Mul, Eq, Ge, Gt, Le, Lt, 
-    Minus, Mod, Ne, Not, Or, Plus, Arrow, Lshift, 
-    Rshift, Xor, Dotlength,
+    Sub, Minus, Mod, Ne, Not, Or, Plus, Add, Arrow, Lshift, 
+    Rshift, Xor, Length,
     Comma, Lbrace, Lpar, Lsq, Rbrace, Rpar, Rsq, Semicolon,
     Bool, Double, Else, If, Int, Print, Parseint, 
     Public, Return, Static, String, Void, While,
@@ -54,8 +54,8 @@ enum category {
     "Id", \
     "StrLit", \
     "And", "Assign", "Star", "Div", "Mul", "Eq", "Ge", "Gt", "Le", "Lt", \
-    "Minus", "Mod", "Ne", "Not", "Or", "Plus", "Arrow", "Lshift", \
-    "Rshift", "Xor", "Dotlength", \
+    "Sub", "Minus", "Mod", "Ne", "Not", "Or", "Plus", "Add", "Arrow", "Lshift", \
+    "Rshift", "Xor", "Length", \
     "Comma", "Lbrace", "Lpar", "Lsq", "Rbrace", "Rpar", "Rsq", "Semicolon", \
     "Bool", "Double", "Else", "If", "Int", "Print", "Parseint", \
     "Public", "Return", "Static", "String", "Void", "While", \

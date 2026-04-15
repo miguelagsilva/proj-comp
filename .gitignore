@@ -63,3 +63,5 @@ y.output
 y.tab.c
 y.tab.h
 *.pdf
+jucompiler.output
+jucompiler.tab.c

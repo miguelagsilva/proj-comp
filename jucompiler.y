@@ -79,7 +79,7 @@ fieldDecl:
                                                           current = current->next;
                                                       }
                                                       $$ = res; }
-    | error SEMICOLON                 { $$ = newlist(); }
+    | error SEMICOLON                               { $$ = newlist(); }
     ;
 
 idList:
@@ -134,7 +134,7 @@ methodBody:
 
 methodBody_content:
       /* empty */                                   { $$ = newlist(); }
-    | methodBody_content statement                  { $$ = $1; append($$, $2); }
+    | methodBody_content statement                  { $$ = $1; if ($2 != NULL) append($$, $2); }
     | methodBody_content varDecl                    { $$ = $1; appendlist($$, $2); }
     ;
 
@@ -153,8 +153,13 @@ varDecl:
     ;
 
 statement:
-      LBRACE statement_list RBRACE                  { $$ = newnode(Block, NULL);
-                                                      addchildren($$, $2); }
+      LBRACE statement_list RBRACE                  { struct node_list *cur = $2->next;
+                                                      int count = 0;
+                                                      struct node *single = NULL;
+                                                      while (cur != NULL) { count++; single = cur->node; cur = cur->next; }
+                                                      if (count == 1) { $$ = single; }
+                                                      else if (count == 0) { $$ = NULL; }
+                                                      else { $$ = newnode(Block, NULL); addchildren($$, $2); } }
     | IF LPAR expr RPAR statement %prec LOWER_THAN_ELSE
                                                     { $$ = newnode(If, NULL);
                                                       addchild($$, $3);
@@ -166,7 +171,7 @@ statement:
                                                       addchild($$, $7 != NULL ? $7 : newnode(Block, NULL)); }
     | WHILE LPAR expr RPAR statement                { $$ = newnode(While, NULL);
                                                       addchild($$, $3);
-                                                      addchild($$, $5); }
+                                                      addchild($$, $5 != NULL ? $5 : newnode(Block, NULL)); }
     | RETURN expr SEMICOLON                         { $$ = newnode(Return, NULL);
                                                       addchild($$, $2); }
     | RETURN SEMICOLON                              { $$ = newnode(Return, NULL); }
@@ -177,16 +182,18 @@ statement:
                                                       addchild($$, $3); }
     | PRINT LPAR STRLIT RPAR SEMICOLON              { $$ = newnode(Print, NULL);
                                                       addchild($$, newnode(StrLit, $3)); }
+    /* this rule is needed because [ ( MethodInvocation | Assignment | ParseArgs ) ] SEMICOLON */
+    | SEMICOLON                                     { $$ = NULL; }
     | error SEMICOLON                               { $$ = NULL; }
     ;
 
 statement_list:
       /* empty */                                   { $$ = newlist(); }
-    | statement_list statement                      { $$ = $1; append($$, $2); }
+    | statement_list statement                      { $$ = $1; if ($2 != NULL) append($$, $2); }
     ;
 
 methodInvocation:
-      IDENTIFIER LPAR RPAR                          { $$ = newnode(Call, $1);
+      IDENTIFIER LPAR RPAR                          { $$ = newnode(Call, NULL);
                                                       addchild($$, newnode(Identifier, $1)); }
     | IDENTIFIER LPAR expr_list RPAR                { $$ = newnode(Call, NULL);
                                                       addchild($$, newnode(Identifier, $1));
@@ -208,8 +215,8 @@ parseArgs:
     ;
 
 expr:
-      expr PLUS expr                                { $$ = newnode(Plus, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr MINUS expr                               { $$ = newnode(Minus, NULL); addchild($$, $1); addchild($$, $3); }
+      expr PLUS expr                                { $$ = newnode(Add, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr MINUS expr                               { $$ = newnode(Sub, NULL); addchild($$, $1); addchild($$, $3); }
     | expr STAR expr                                { $$ = newnode(Mul, NULL); addchild($$, $1); addchild($$, $3); }
     | expr DIV expr                                 { $$ = newnode(Div, NULL); addchild($$, $1); addchild($$, $3); }
     | expr MOD expr                                 { $$ = newnode(Mod, NULL); addchild($$, $1); addchild($$, $3); }
@@ -224,15 +231,15 @@ expr:
     | expr LE expr                                  { $$ = newnode(Le, NULL); addchild($$, $1); addchild($$, $3); }
     | expr GT expr                                  { $$ = newnode(Gt, NULL); addchild($$, $1); addchild($$, $3); }
     | expr GE expr                                  { $$ = newnode(Ge, NULL); addchild($$, $1); addchild($$, $3); }
-    | PLUS expr                                     { $$ = newnode(Plus, NULL); addchild($$, $2); }
-    | MINUS expr                                    { $$ = newnode(Minus, NULL); addchild($$, $2); }
+    | PLUS expr %prec NOT                           { $$ = newnode(Plus, NULL); addchild($$, $2); }
+    | MINUS expr %prec NOT                          { $$ = newnode(Minus, NULL); addchild($$, $2); }
     | NOT expr                                      { $$ = newnode(Not, NULL); addchild($$, $2); }
     | LPAR expr RPAR                                { $$ = $2; }
     | methodInvocation                              { $$ = $1; }
     | assignment                                    { $$ = $1; }
     | parseArgs                                     { $$ = $1; }
-    | IDENTIFIER                                    { $$ = newnode(Identifier, $1); }
-    | IDENTIFIER DOTLENGTH                          { $$ = newnode(Dotlength, NULL); addchild($$, newnode(Identifier, $1)); }
+    | IDENTIFIER %prec AND                          { $$ = newnode(Identifier, $1); }
+    | IDENTIFIER DOTLENGTH                          { $$ = newnode(Length, NULL); addchild($$, newnode(Identifier, $1)); }
     | NATURAL                                       { $$ = newnode(DecLit, $1); }
     | DECIMAL                                       { $$ = newnode(RealLit, $1); }
     | BOOLLIT                                       { $$ = newnode(BoolLit, $1); }
