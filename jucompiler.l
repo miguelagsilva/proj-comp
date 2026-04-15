@@ -20,7 +20,7 @@ int flag_t = 0;
 int flag_e2 = 0;
 int comment_start_line = 0;
 int comment_start_col = 0;
-int syn_line = -1, syn_column = -1;
+int syn_line = 1, syn_col = 1;
 int errors = 0;
 
 /* C functions */
@@ -49,6 +49,8 @@ void print_token(const char* fmt, ...) {
 /* Track line and column for every token */
 #define YY_USER_ACTION \
   do { \
+    syn_line = line; \
+    syn_col = column; \
     if (yytext[0] == '\n' || yytext[0] == '\r') { \
       line++; \
       column = 1; \
@@ -207,7 +209,7 @@ extern int yylex();
 
 void yyerror(char *error) {
     errors++;
-    printf("Found %s '%s' (%d,%d)\n", error, yytext, syn_line, syn_column);
+    printf("Line %d, col %d: %s: %s\n", syn_line, syn_col, error, yytext);
 }
 int main(int argc, char *argv[]) {
   process_command(argc, argv);

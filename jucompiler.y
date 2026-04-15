@@ -26,6 +26,7 @@ struct node *ast;
 %left LSHIFT RSHIFT
 %left PLUS MINUS
 %left STAR DIV MOD
+%right NOT
 %left DOTLENGTH
 
 %nonassoc LOWER_THAN_ELSE
@@ -78,6 +79,7 @@ fieldDecl:
                                                           current = current->next;
                                                       }
                                                       $$ = res; }
+    | error SEMICOLON                 { $$ = newlist(); }
     ;
 
 idList:
@@ -175,6 +177,7 @@ statement:
                                                       addchild($$, $3); }
     | PRINT LPAR STRLIT RPAR SEMICOLON              { $$ = newnode(Print, NULL);
                                                       addchild($$, newnode(StrLit, $3)); }
+    | error SEMICOLON                               { $$ = NULL; }
     ;
 
 statement_list:
@@ -188,6 +191,7 @@ methodInvocation:
     | IDENTIFIER LPAR expr_list RPAR                { $$ = newnode(Call, NULL);
                                                       addchild($$, newnode(Identifier, $1));
                                                       addchildren($$, $3); }
+    | IDENTIFIER LPAR error RPAR                    { $$ = NULL; }
     ;
 
 assignment:
@@ -200,6 +204,7 @@ parseArgs:
       PARSEINT LPAR IDENTIFIER LSQ expr RSQ RPAR    { $$ = newnode(ParseArgs, NULL);
                                                       addchild($$, newnode(Identifier, $3));
                                                       addchild($$, $5); }
+    | PARSEINT LPAR error RPAR                      { $$ = NULL; }
     ;
 
 expr:
@@ -231,6 +236,7 @@ expr:
     | NATURAL                                       { $$ = newnode(DecLit, $1); }
     | DECIMAL                                       { $$ = newnode(RealLit, $1); }
     | BOOLLIT                                       { $$ = newnode(BoolLit, $1); }
+    | LPAR error RPAR                               { $$ = NULL; }
     ;
 
 expr_list:
