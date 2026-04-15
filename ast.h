@@ -49,9 +49,9 @@ enum category {
     "Expr", \
     "BoolLit", \
     "Reserved", \
-    "DecLit", \
-    "RealLit", \
-    "Id", \
+    "Natural", \
+    "Decimal", \
+    "Identifier", \
     "StrLit", \
     "And", "Assign", "Star", "Div", "Mul", "Eq", "Ge", "Gt", "Le", "Lt", \
     "Sub", "Minus", "Mod", "Ne", "Not", "Or", "Plus", "Add", "Arrow", "Lshift", \
