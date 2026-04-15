@@ -14,7 +14,7 @@ struct node *ast;
 
 %token AND ASSIGN STAR COMMA DIV EQ GE GT LBRACE LE LPAR LSQ LT MINUS MOD NE NOT OR PLUS RBRACE RPAR RSQ SEMICOLON ARROW LSHIFT RSHIFT XOR BOOL CLASS DOTLENGTH DOUBLE ELSE IF INT PRINT PARSEINT PUBLIC RETURN STATIC STRING VOID WHILE
 %token<lexeme> BOOLLIT RESERVED NATURAL DECIMAL IDENTIFIER STRLIT
-%type<node> program programs methodDecl type methodHeader methodParams methodBody statement methodInvocation assignment parseArgs expr paramDecl
+%type<node> program programs methodDecl type methodHeader methodParams methodBody statement methodInvocation assignment parseArgs expr paramDecl expr1
 %type<node_list> program_content fieldDecl paramDecl_list methodBody_content statement_list expr_list varDecl idList
 
 %right ASSIGN
@@ -215,30 +215,37 @@ parseArgs:
     ;
 
 expr:
-      expr PLUS expr                                { $$ = newnode(Add, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr MINUS expr                               { $$ = newnode(Sub, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr STAR expr                                { $$ = newnode(Mul, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr DIV expr                                 { $$ = newnode(Div, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr MOD expr                                 { $$ = newnode(Mod, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr AND expr                                 { $$ = newnode(And, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr OR expr                                  { $$ = newnode(Or, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr RSHIFT expr                              { $$ = newnode(Rshift, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr LSHIFT expr                              { $$ = newnode(Lshift, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr XOR expr                                 { $$ = newnode(Xor, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr EQ expr                                  { $$ = newnode(Eq, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr NE expr                                  { $$ = newnode(Ne, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr LT expr                                  { $$ = newnode(Lt, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr LE expr                                  { $$ = newnode(Le, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr GT expr                                  { $$ = newnode(Gt, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr GE expr                                  { $$ = newnode(Ge, NULL); addchild($$, $1); addchild($$, $3); }
-    | PLUS expr %prec NOT                           { $$ = newnode(Plus, NULL); addchild($$, $2); }
-    | MINUS expr %prec NOT                          { $$ = newnode(Minus, NULL); addchild($$, $2); }
-    | NOT expr                                      { $$ = newnode(Not, NULL); addchild($$, $2); }
+      assignment                                    { $$ = $1; }
+    | expr1                                         { $$ = $1; }
+    ;
+
+/* The separation between expr and expr1 was needed to allow a && b = 1 to be detected as a syntax error
+   assignment was kept in expr and all the others where moved to expr1. operations are segregated from
+   assignments*/
+expr1:
+      expr1 PLUS expr1                              { $$ = newnode(Add, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 MINUS expr1                             { $$ = newnode(Sub, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 STAR expr1                              { $$ = newnode(Mul, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 DIV expr1                               { $$ = newnode(Div, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 MOD expr1                               { $$ = newnode(Mod, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 AND expr1                               { $$ = newnode(And, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 OR expr1                                { $$ = newnode(Or, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 RSHIFT expr1                            { $$ = newnode(Rshift, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 LSHIFT expr1                            { $$ = newnode(Lshift, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 XOR expr1                               { $$ = newnode(Xor, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 EQ expr1                                { $$ = newnode(Eq, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 NE expr1                                { $$ = newnode(Ne, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 LT expr1                                { $$ = newnode(Lt, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 LE expr1                                { $$ = newnode(Le, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 GT expr1                                { $$ = newnode(Gt, NULL); addchild($$, $1); addchild($$, $3); }
+    | expr1 GE expr1                                { $$ = newnode(Ge, NULL); addchild($$, $1); addchild($$, $3); }
+    | PLUS expr1 %prec NOT                          { $$ = newnode(Plus, NULL); addchild($$, $2); }
+    | MINUS expr1 %prec NOT                         { $$ = newnode(Minus, NULL); addchild($$, $2); }
+    | NOT expr1                                     { $$ = newnode(Not, NULL); addchild($$, $2); }
     | LPAR expr RPAR                                { $$ = $2; }
     | methodInvocation                              { $$ = $1; }
-    | assignment                                    { $$ = $1; }
     | parseArgs                                     { $$ = $1; }
-    | IDENTIFIER %prec AND                          { $$ = newnode(Identifier, $1); }
+    | IDENTIFIER                                    { $$ = newnode(Identifier, $1); }
     | IDENTIFIER DOTLENGTH                          { $$ = newnode(Length, NULL); addchild($$, newnode(Identifier, $1)); }
     | NATURAL                                       { $$ = newnode(DecLit, $1); }
     | DECIMAL                                       { $$ = newnode(RealLit, $1); }
