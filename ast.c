@@ -93,8 +93,27 @@ void show(struct node *node, int depth) {
 }
 
 void appendlist(struct node_list *dst, struct node_list *src) {
-    while (src != NULL) {
-        append(dst, src->node);
-        src = src->next;
+    struct node_list *cur = src->next;  // skip sentinel head
+    while (cur != NULL) {
+        append(dst, cur->node);
+        cur = cur->next;
     }
+}
+
+void free_ast(struct node *node) {
+  if (node == NULL) {
+    return;
+  }
+  struct node_list *child = node->children;
+  while (child != NULL) {
+    if (child->node != NULL) {
+      free_ast(child->node);
+    }
+    struct node_list *temp = child;
+    child = child->next;
+    free(temp);
+    if (node->token != NULL) {
+      free(node->token);
+    }
+  }
 }

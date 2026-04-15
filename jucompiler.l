@@ -195,7 +195,7 @@ exponent ([eE][+-]?{seq_digits})
 <COMMENT>.              { }
 <COMMENT><<EOF>>        { 
                           printf("Line %d, col %d: unterminated comment\n", comment_start_line, comment_start_col); 
-                          syn_line = line;
+                          syn_line = line;  
                           syn_col = column;
                           return 0; 
                         }
@@ -221,18 +221,28 @@ void yyerror(char *error) {
 int main(int argc, char *argv[]) {
   process_command(argc, argv);
 
-  if (flag_l || flag_e1) {
-    print_tokens = flag_l;  // only print tokens if -l
+  if (flag_l) {
+    print_tokens = 1;  // only print tokens if -l
     while (yylex() != 0);   // run lexer only
     return 0;
   }
+  if (flag_e1) {
+    while (yylex() != 0);   // run lexer only
+    return 0;
+  }
+  if (flag_t) {
+    yyparse();
+    if (errors == 0 && ast != NULL) {
+      show(ast,0);
+    }
+    if (ast != NULL) free_ast(ast);
+    return 0;
+  }
 
-  // all other flags: run full parse
+  // flag e2
   yyparse();
 
-  if ((flag_t) && errors == 0) {
-    show(ast, 0);
-  }
+  if (ast != NULL) free_ast(ast);
 
   // no flag: only errors were already printed by yyerror/lexer
   return 0;

@@ -82,4 +82,5 @@ void append(struct node_list *list, struct node *node);
 void addchildren(struct node *node, struct node_list *list);
 void show(struct node *node, int depth);
 void appendlist(struct node_list *dst, struct node_list *src);
+void free_ast(struct node *node);
 #endif
