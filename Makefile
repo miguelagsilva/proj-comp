@@ -3,7 +3,7 @@ all: clean build test zip
 build:
 	yacc -d -v -t -g --report=all -Wcounterexamples -Wconflicts-sr jucompiler.y
 	lex jucompiler.l
-	cc lex.yy.c y.tab.c ast.c -o jucompiler -Wall -Wno-unused-function
+	cc lex.yy.c y.tab.c ast.c semantics.c -o jucompiler -Wall -Wno-unused-function
 	./jucompiler < input.txt
 
 test:

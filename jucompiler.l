@@ -3,6 +3,7 @@
 
 #include "y.tab.h"
 #include "ast.h"
+#include "semantics.h"
 
 /* C functions */
 int yyparse(void);
@@ -18,6 +19,8 @@ int flag_l = 0;
 int flag_e1 = 0;
 int flag_t = 0;
 int flag_e2 = 0;
+int flag_s = 0;
+int flag_e3 = 0;
 int comment_start_line = 0;
 int comment_start_col = 0;
 int syn_line = 1, syn_col = 1;
@@ -32,6 +35,8 @@ void process_command(int argc, char *argv[]) {
     else if (strcmp(argv[1], "-e1") == 0) flag_e1 = 1;
     else if (strcmp(argv[1], "-t")  == 0) flag_t  = 1;
     else if (strcmp(argv[1], "-e2") == 0) flag_e2 = 1;
+    else if (strcmp(argv[1], "-s")  == 0) flag_s  = 1;
+    else if (strcmp(argv[1], "-e3") == 0) flag_e3 = 1;
     else {
       printf("Unknown option: %s\n", argv[1]);
       exit(1);
@@ -222,29 +227,41 @@ int main(int argc, char *argv[]) {
   process_command(argc, argv);
 
   if (flag_l) {
-    print_tokens = 1;  // only print tokens if -l
-    while (yylex() != 0);   // run lexer only
+    print_tokens = 1;
+    while (yylex() != 0);
     return 0;
   }
   if (flag_e1) {
-    while (yylex() != 0);   // run lexer only
+    while (yylex() != 0);
     return 0;
   }
+
+  yyparse();
+
   if (flag_t) {
-    yyparse();
     if (errors == 0 && ast != NULL) {
-      show(ast,0);
+      show(ast, 0);
     }
     if (ast != NULL) free_ast(ast);
     return 0;
   }
 
-  // flag e2
-  yyparse();
+  if (flag_e2) {
+    if (ast != NULL) free_ast(ast);
+    return 0;
+  }
+
+  if (errors == 0 && ast != NULL) {
+    
+    check_program(ast);
+
+    if (flag_s) {
+      print_symbol_tables();
+      // show(ast, 0);
+    }
+  }
 
   if (ast != NULL) free_ast(ast);
-
-  // no flag: only errors were already printed by yyerror/lexer
   return 0;
 }
 int yywrap() {  /* called on EOF, return 1 to terminate */

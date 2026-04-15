@@ -62,9 +62,20 @@ enum category {
     "Block", "Call", "StringArray", "ParamDecl" \
 }
 
+typedef enum {
+    T_NONE,
+    T_INT,
+    T_DOUBLE,
+    T_BOOLEAN,
+    T_STRINGARRAY,
+    T_VOID,
+    T_UNDEF
+} SemanticType;
+
 struct node {
     enum category category;
     char *token;
+    SemanticType type;
     struct node_list *children;
 };
 
