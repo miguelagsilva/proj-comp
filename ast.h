@@ -76,6 +76,8 @@ struct node {
     enum category category;
     char *token;
     SemanticType type;
+    int line;
+    int column;
     struct node_list *children;
 };
 
@@ -85,6 +87,7 @@ struct node_list {
 };
 
 struct node *newnode(enum category category, char *token);
+struct node *newnode_loc(enum category category, char *token, int line, int column);
 void addchild(struct node *parent, struct node *child);
 struct node *getchild(struct node *parent, int position);
 int countchildren(struct node *node);

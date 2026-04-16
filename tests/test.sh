@@ -66,4 +66,31 @@ if [[ -d java/meta2 ]]; then
     done
 fi
 
+# Testes da Meta 3
+if [[ -d java/meta3 ]]; then
+    for inp in java/meta3/*.java; do
+        total=$(( $total + 1 ))
+        echo "$inp"
+        out=${inp%.java}.out
+        tmp=${inp%.java}.out_temp
+        
+        flag="-s"
+        
+        if [[ "$inp" == *_e3.java ]]; then
+            flag="-e3"
+        fi
+        
+        if $exe $flag < "$inp" > "$tmp"; then
+            lines=$(diff $out $tmp | wc -l)
+            if [[ $lines -gt 0 ]]; then
+                echo " Wrong Answer, run 'diff $out $tmp' to see the differences"
+            else
+                accepted=$(( $accepted + 1 ))
+            fi
+        else
+            echo " Runtime Error, failed to execute '$exe'"
+        fi
+    done
+fi
+
 echo "Accepted: $accepted / $total"

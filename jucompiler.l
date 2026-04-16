@@ -54,8 +54,8 @@ void print_token(const char* fmt, ...) {
 /* Track line and column for every token */
 #define YY_USER_ACTION \
   do { \
-    syn_line = line; \
-    syn_col = column; \
+    yylloc.first_line = syn_line = line; \
+    yylloc.first_column = syn_col = column; \
     if (yytext[0] == '\n' || yytext[0] == '\r') { \
       line++; \
       column = 1; \
@@ -257,7 +257,7 @@ int main(int argc, char *argv[]) {
 
     if (flag_s) {
       print_symbol_tables();
-      // show(ast, 0);
+      show(ast, 0);
     }
   }
 

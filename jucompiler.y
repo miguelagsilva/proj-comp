@@ -38,6 +38,8 @@ struct node *ast;
     struct node_list *node_list;
 }
 
+%locations
+
 /* START grammar rules section -- BNF grammar */
 
 %%
@@ -83,8 +85,8 @@ fieldDecl:
     ;
 
 idList:
-      IDENTIFIER                                    { $$ = newlist(); append($$, newnode(Identifier, $1)); }
-    | idList COMMA IDENTIFIER                       { $$ = $1; append($$, newnode(Identifier, $3)); }
+      IDENTIFIER                                    { $$ = newlist(); append($$, newnode_loc(Identifier, $1, @1.first_line, @1.first_column)); }
+    | idList COMMA IDENTIFIER                       { $$ = $1; append($$, newnode_loc(Identifier, $3, @3.first_line, @3.first_column)); }
     ;
 
 type:
@@ -96,11 +98,11 @@ type:
 methodHeader:
       type IDENTIFIER LPAR methodParams RPAR        { $$ = newnode(MethodHeader, NULL);
                                                       addchild($$, $1);
-                                                      addchild($$, newnode(Identifier, $2));
+                                                      addchild($$, newnode_loc(Identifier, $2, @2.first_line, @2.first_column));
                                                       addchild($$, $4); }
     | VOID IDENTIFIER LPAR methodParams RPAR        { $$ = newnode(MethodHeader, NULL);
                                                       addchild($$, newnode(Void, NULL));
-                                                      addchild($$, newnode(Identifier, $2));
+                                                      addchild($$, newnode_loc(Identifier, $2, @2.first_line, @2.first_column));
                                                       addchild($$, $4); }
     ;
 
@@ -111,7 +113,7 @@ methodParams:
                                                       addchildren($$, $2); }
     | STRING LSQ RSQ IDENTIFIER                     { struct node *pd = newnode(ParamDecl, NULL);
                                                       addchild(pd, newnode(StringArray, NULL));
-                                                      addchild(pd, newnode(Identifier, $4));
+                                                      addchild(pd, newnode_loc(Identifier, $4, @4.first_line, @4.first_column));
                                                       $$ = newnode(MethodParams, NULL);
                                                       addchild($$, pd); }
     ;
@@ -119,7 +121,7 @@ methodParams:
 paramDecl:
       type IDENTIFIER                               { $$ = newnode(ParamDecl, NULL);
                                                       addchild($$, $1);
-                                                      addchild($$, newnode(Identifier, $2)); }
+                                                      addchild($$, newnode_loc(Identifier, $2, @2.first_line, @2.first_column)); }
     ;
 
 paramDecl_list:
@@ -128,8 +130,7 @@ paramDecl_list:
     ;
 
 methodBody:
-      LBRACE methodBody_content RBRACE              { $$ = newnode(MethodBody, NULL);
-                                                      addchildren($$, $2); }
+      LBRACE methodBody_content RBRACE              { $$ = newnode(MethodBody, NULL); addchildren($$, $2); }
     ;
 
 methodBody_content:
@@ -154,35 +155,25 @@ varDecl:
 
 statement:
       LBRACE statement_list RBRACE                  { struct node_list *cur = $2->next;
-                                                      int count = 0;
-                                                      struct node *single = NULL;
+                                                      int count = 0; struct node *single = NULL;
                                                       while (cur != NULL) { count++; single = cur->node; cur = cur->next; }
                                                       if (count == 1) { $$ = single; }
                                                       else if (count == 0) { $$ = NULL; }
                                                       else { $$ = newnode(Block, NULL); addchildren($$, $2); } }
     | IF LPAR expr RPAR statement %prec LOWER_THAN_ELSE
-                                                    { $$ = newnode(If, NULL);
-                                                      addchild($$, $3);
-                                                      addchild($$, $5 != NULL ? $5 : newnode(Block, NULL));
-                                                      addchild($$, newnode(Block, NULL)); }
-    | IF LPAR expr RPAR statement ELSE statement    { $$ = newnode(If, NULL);
-                                                      addchild($$, $3);
-                                                      addchild($$, $5 != NULL ? $5 : newnode(Block, NULL));
-                                                      addchild($$, $7 != NULL ? $7 : newnode(Block, NULL)); }
-    | WHILE LPAR expr RPAR statement                { $$ = newnode(While, NULL);
-                                                      addchild($$, $3);
-                                                      addchild($$, $5 != NULL ? $5 : newnode(Block, NULL)); }
-    | RETURN expr SEMICOLON                         { $$ = newnode(Return, NULL);
-                                                      addchild($$, $2); }
-    | RETURN SEMICOLON                              { $$ = newnode(Return, NULL); }
+                                                    { $$ = newnode_loc(If, NULL, @1.first_line, @1.first_column);
+                                                      addchild($$, $3); addchild($$, $5 != NULL ? $5 : newnode(Block, NULL)); addchild($$, newnode(Block, NULL)); }
+    | IF LPAR expr RPAR statement ELSE statement    { $$ = newnode_loc(If, NULL, @1.first_line, @1.first_column);
+                                                      addchild($$, $3); addchild($$, $5 != NULL ? $5 : newnode(Block, NULL)); addchild($$, $7 != NULL ? $7 : newnode(Block, NULL)); }
+    | WHILE LPAR expr RPAR statement                { $$ = newnode_loc(While, NULL, @1.first_line, @1.first_column);
+                                                      addchild($$, $3); addchild($$, $5 != NULL ? $5 : newnode(Block, NULL)); }
+    | RETURN expr SEMICOLON                         { $$ = newnode_loc(Return, NULL, @1.first_line, @1.first_column); addchild($$, $2); }
+    | RETURN SEMICOLON                              { $$ = newnode_loc(Return, NULL, @1.first_line, @1.first_column); }
     | methodInvocation SEMICOLON                    { $$ = $1; }
     | assignment SEMICOLON                          { $$ = $1; }
     | parseArgs SEMICOLON                           { $$ = $1; }
-    | PRINT LPAR expr RPAR SEMICOLON                { $$ = newnode(Print, NULL);
-                                                      addchild($$, $3); }
-    | PRINT LPAR STRLIT RPAR SEMICOLON              { $$ = newnode(Print, NULL);
-                                                      addchild($$, newnode(StrLit, $3)); }
-    /* this rule is needed because [ ( MethodInvocation | Assignment | ParseArgs ) ] SEMICOLON */
+    | PRINT LPAR expr RPAR SEMICOLON                { $$ = newnode_loc(Print, NULL, @1.first_line, @1.first_column); addchild($$, $3); }
+    | PRINT LPAR STRLIT RPAR SEMICOLON              { $$ = newnode_loc(Print, NULL, @1.first_line, @1.first_column); addchild($$, newnode_loc(StrLit, $3, @3.first_line, @3.first_column)); }
     | SEMICOLON                                     { $$ = NULL; }
     | error SEMICOLON                               { $$ = NULL; }
     ;
@@ -193,24 +184,17 @@ statement_list:
     ;
 
 methodInvocation:
-      IDENTIFIER LPAR RPAR                          { $$ = newnode(Call, NULL);
-                                                      addchild($$, newnode(Identifier, $1)); }
-    | IDENTIFIER LPAR expr_list RPAR                { $$ = newnode(Call, NULL);
-                                                      addchild($$, newnode(Identifier, $1));
-                                                      addchildren($$, $3); }
+      IDENTIFIER LPAR RPAR                          { $$ = newnode_loc(Call, NULL, @1.first_line, @1.first_column); addchild($$, newnode_loc(Identifier, $1, @1.first_line, @1.first_column)); }
+    | IDENTIFIER LPAR expr_list RPAR                { $$ = newnode_loc(Call, NULL, @1.first_line, @1.first_column); addchild($$, newnode_loc(Identifier, $1, @1.first_line, @1.first_column)); addchildren($$, $3); }
     | IDENTIFIER LPAR error RPAR                    { $$ = NULL; }
     ;
 
 assignment:
-      IDENTIFIER ASSIGN expr                        { $$ = newnode(Assign, NULL);
-                                                      addchild($$, newnode(Identifier, $1));
-                                                      addchild($$, $3); }
+      IDENTIFIER ASSIGN expr                        { $$ = newnode_loc(Assign, NULL, @2.first_line, @2.first_column); addchild($$, newnode_loc(Identifier, $1, @1.first_line, @1.first_column)); addchild($$, $3); }
     ;
 
 parseArgs:
-      PARSEINT LPAR IDENTIFIER LSQ expr RSQ RPAR    { $$ = newnode(ParseArgs, NULL);
-                                                      addchild($$, newnode(Identifier, $3));
-                                                      addchild($$, $5); }
+      PARSEINT LPAR IDENTIFIER LSQ expr RSQ RPAR    { $$ = newnode_loc(ParseArgs, NULL, @1.first_line, @1.first_column); addchild($$, newnode_loc(Identifier, $3, @3.first_line, @3.first_column)); addchild($$, $5); }
     | PARSEINT LPAR error RPAR                      { $$ = NULL; }
     ;
 
@@ -219,37 +203,34 @@ expr:
     | expr1                                         { $$ = $1; }
     ;
 
-/* The separation between expr and expr1 was needed to allow a && b = 1 to be detected as a syntax error
-   assignment was kept in expr and all the others where moved to expr1. operations are segregated from
-   assignments*/
 expr1:
-      expr1 PLUS expr1                              { $$ = newnode(Add, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 MINUS expr1                             { $$ = newnode(Sub, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 STAR expr1                              { $$ = newnode(Mul, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 DIV expr1                               { $$ = newnode(Div, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 MOD expr1                               { $$ = newnode(Mod, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 AND expr1                               { $$ = newnode(And, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 OR expr1                                { $$ = newnode(Or, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 RSHIFT expr1                            { $$ = newnode(Rshift, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 LSHIFT expr1                            { $$ = newnode(Lshift, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 XOR expr1                               { $$ = newnode(Xor, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 EQ expr1                                { $$ = newnode(Eq, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 NE expr1                                { $$ = newnode(Ne, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 LT expr1                                { $$ = newnode(Lt, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 LE expr1                                { $$ = newnode(Le, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 GT expr1                                { $$ = newnode(Gt, NULL); addchild($$, $1); addchild($$, $3); }
-    | expr1 GE expr1                                { $$ = newnode(Ge, NULL); addchild($$, $1); addchild($$, $3); }
-    | PLUS expr1 %prec NOT                          { $$ = newnode(Plus, NULL); addchild($$, $2); }
-    | MINUS expr1 %prec NOT                         { $$ = newnode(Minus, NULL); addchild($$, $2); }
-    | NOT expr1                                     { $$ = newnode(Not, NULL); addchild($$, $2); }
+      expr1 PLUS expr1                              { $$ = newnode_loc(Add, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 MINUS expr1                             { $$ = newnode_loc(Sub, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 STAR expr1                              { $$ = newnode_loc(Mul, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 DIV expr1                               { $$ = newnode_loc(Div, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 MOD expr1                               { $$ = newnode_loc(Mod, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 AND expr1                               { $$ = newnode_loc(And, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 OR expr1                                { $$ = newnode_loc(Or, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 RSHIFT expr1                            { $$ = newnode_loc(Rshift, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 LSHIFT expr1                            { $$ = newnode_loc(Lshift, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 XOR expr1                               { $$ = newnode_loc(Xor, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 EQ expr1                                { $$ = newnode_loc(Eq, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 NE expr1                                { $$ = newnode_loc(Ne, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 LT expr1                                { $$ = newnode_loc(Lt, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 LE expr1                                { $$ = newnode_loc(Le, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 GT expr1                                { $$ = newnode_loc(Gt, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | expr1 GE expr1                                { $$ = newnode_loc(Ge, NULL, @2.first_line, @2.first_column); addchild($$, $1); addchild($$, $3); }
+    | PLUS expr1 %prec NOT                          { $$ = newnode_loc(Plus, NULL, @1.first_line, @1.first_column); addchild($$, $2); }
+    | MINUS expr1 %prec NOT                         { $$ = newnode_loc(Minus, NULL, @1.first_line, @1.first_column); addchild($$, $2); }
+    | NOT expr1                                     { $$ = newnode_loc(Not, NULL, @1.first_line, @1.first_column); addchild($$, $2); }
     | LPAR expr RPAR                                { $$ = $2; }
     | methodInvocation                              { $$ = $1; }
     | parseArgs                                     { $$ = $1; }
-    | IDENTIFIER                                    { $$ = newnode(Identifier, $1); }
-    | IDENTIFIER DOTLENGTH                          { $$ = newnode(Length, NULL); addchild($$, newnode(Identifier, $1)); }
-    | NATURAL                                       { $$ = newnode(DecLit, $1); }
-    | DECIMAL                                       { $$ = newnode(RealLit, $1); }
-    | BOOLLIT                                       { $$ = newnode(BoolLit, $1); }
+    | IDENTIFIER                                    { $$ = newnode_loc(Identifier, $1, @1.first_line, @1.first_column); }
+    | IDENTIFIER DOTLENGTH                          { $$ = newnode_loc(Length, NULL, @2.first_line, @2.first_column); addchild($$, newnode_loc(Identifier, $1, @1.first_line, @1.first_column)); }
+    | NATURAL                                       { $$ = newnode_loc(DecLit, $1, @1.first_line, @1.first_column); }
+    | DECIMAL                                       { $$ = newnode_loc(RealLit, $1, @1.first_line, @1.first_column); }
+    | BOOLLIT                                       { $$ = newnode_loc(BoolLit, $1, @1.first_line, @1.first_column); }
     | LPAR error RPAR                               { $$ = NULL; }
     ;
 
@@ -257,7 +238,6 @@ expr_list:
       expr                                          { $$ = newlist(); append($$, $1); }
     | expr_list COMMA expr                          { $$ = $1; append($$, $3); }
     ;
-
 %%
 
 /* START subroutines section */

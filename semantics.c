@@ -46,8 +46,23 @@ SymbolTable* create_table(const char *name) {
     return new_table;
 }
 
+Symbol* search_local(SymbolTable *table, char *name) {
+    Symbol *curr = table->first_symbol;
+    while (curr != NULL) {
+        if (strcmp(curr->name, name) == 0) return curr;
+        curr = curr->next;
+    }
+    return NULL;
+}
+
 Symbol* insert_symbol(SymbolTable *table, char *name, SemanticType type, int is_method, int is_param, ParamList *params, struct node *node) {
     
+    if (strcmp(name, "return") != 0 && search_local(table, name) != NULL) {
+        printf("Line %d, col %d: Symbol %s already defined\n", node->line, node->column, name);
+        semantic_errors++;
+        return NULL; 
+    }
+
     Symbol *new_sym = (Symbol*)malloc(sizeof(Symbol));
     new_sym->name = strdup(name);
     new_sym->type = type;
@@ -91,6 +106,153 @@ ParamList* check_parameters(struct node *params_node, SymbolTable *local_table) 
     return head;
 }
 
+Symbol* search_variable(SymbolTable *local, SymbolTable *global, char *name) {
+    Symbol *sym;
+    if (local != NULL) {
+        sym = local->first_symbol;
+        while (sym != NULL) {
+            if (strcmp(sym->name, name) == 0 && sym->is_method == 0) return sym;
+            sym = sym->next;
+        }
+    }
+    if (global != NULL) {
+        sym = global->first_symbol;
+        while (sym != NULL) {
+            if (strcmp(sym->name, name) == 0 && sym->is_method == 0) return sym;
+            sym = sym->next;
+        }
+    }
+    return NULL; 
+}
+
+Symbol* search_method(SymbolTable *global, char *name) {
+    if (global != NULL) {
+        Symbol *sym = global->first_symbol;
+        while (sym != NULL) {
+            if (strcmp(sym->name, name) == 0 && sym->is_method == 1) return sym;
+            sym = sym->next;
+        }
+    }
+    return NULL;
+}
+
+void check_expression(struct node *expr, SymbolTable *local_table, SymbolTable *global_table) {
+    if (expr == NULL) return;
+
+    struct node_list *child = expr->children->next;
+
+    if (expr->category == Call && child != NULL) {
+        child = child->next;
+    }
+
+    while (child != NULL) {
+        check_expression(child->node, local_table, global_table);
+        child = child->next;
+    }
+
+    switch (expr->category) {
+        case DecLit:   expr->type = T_INT; break;
+        case RealLit:  expr->type = T_DOUBLE; break;
+        case BoolLit:  expr->type = T_BOOLEAN; break;
+
+        case Identifier: {
+            Symbol *sym = search_variable(local_table, global_table, expr->token);
+            if (sym != NULL) {
+                expr->type = sym->type;
+            } else {
+                expr->type = T_UNDEF;  
+                printf("Line %d, col %d: Cannot find symbol %s\n", expr->line, expr->column, expr->token);
+                semantic_errors++;
+            }
+            break;
+        }
+
+        case Assign: {
+            struct node *left = getchild(expr, 0);
+            struct node *right = getchild(expr, 1);
+            if (left != NULL && right != NULL) {
+                expr->type = left->type; 
+                
+                int compatible = 0;
+                if (left->type != T_UNDEF && right->type != T_UNDEF) {
+                    if (left->type == right->type) compatible = 1;
+                    else if (left->type == T_DOUBLE && right->type == T_INT) compatible = 1;
+                }
+                
+                if (!compatible) {
+                    printf("Line %d, col %d: Operator = cannot be applied to types %s, %s\n", 
+                           expr->line, expr->column, type_to_string(left->type), type_to_string(right->type));
+                    semantic_errors++;
+                }
+            }
+            break;
+        }
+        case Call: {
+            struct node *id_node = getchild(expr, 0); 
+            if (id_node != NULL) {
+                Symbol *sym = search_method(global_table, id_node->token);
+                
+                if (sym != NULL) {
+                    expr->type = sym->type;
+                    id_node->type = sym->type;
+                } else {
+                    expr->type = T_UNDEF;
+                    id_node->type = T_UNDEF;
+                    printf("Line %d, col %d: Cannot find symbol %s\n", id_node->line, id_node->column, id_node->token);
+                    semantic_errors++;
+                }
+            }
+            break;
+        }
+
+        case ParseArgs:
+        case Length: {
+            expr->type = T_INT;
+            break;
+        }
+
+        case Add:
+        case Sub:
+        case Mul:
+        case Div:
+        case Mod: {
+            struct node *left = getchild(expr, 0);
+            struct node *right = getchild(expr, 1);
+            if (left == NULL || right == NULL) break;
+
+            if (left->type == T_INT && right->type == T_INT) {
+                expr->type = T_INT;
+            } else if ((left->type == T_DOUBLE && right->type == T_INT) ||
+                       (left->type == T_INT && right->type == T_DOUBLE) ||
+                       (left->type == T_DOUBLE && right->type == T_DOUBLE)) {
+                expr->type = T_DOUBLE;
+            } else {
+                expr->type = T_UNDEF;
+                
+                char *op = "";
+                if (expr->category == Add) op = "+";
+                else if (expr->category == Sub) op = "-";
+                else if (expr->category == Mul) op = "*";
+                else if (expr->category == Div) op = "/";
+                else if (expr->category == Mod) op = "%";
+                
+                printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", 
+                       expr->line, expr->column, op, type_to_string(left->type), type_to_string(right->type));
+                semantic_errors++;
+            }
+            break;
+        }
+
+        case Eq: case Ne: case Lt: case Gt: case Le: case Ge: {
+            expr->type = T_BOOLEAN; 
+            break;
+        }
+
+        default:
+            break;
+    }
+}
+
 void check_method(struct node *method_decl, SymbolTable *global_table) {
     struct node *header = getchild(method_decl, 0);
     struct node *body = getchild(method_decl, 1);
@@ -122,15 +284,21 @@ void check_method(struct node *method_decl, SymbolTable *global_table) {
     
     insert_symbol(global_table, id_node->token, ret_type, 1, 0, p_list, method_decl);
     
-    struct node_list *body_child = body->children->next;
-    while (body_child != NULL) {
-        struct node *stmt = body_child->node;
-        if (stmt->category == VarDecl) {
-            struct node *v_type_node = getchild(stmt, 0);
-            struct node *v_id_node = getchild(stmt, 1);
-            insert_symbol(local_table, v_id_node->token, category_to_type(v_type_node->category), 0, 0, NULL, stmt);
+    if (body != NULL && body->children != NULL) {
+        struct node_list *body_child = body->children->next;
+        while (body_child != NULL) {
+            struct node *stmt = body_child->node;
+            if (stmt != NULL) {
+                if (stmt->category == VarDecl) {
+                    struct node *v_type_node = getchild(stmt, 0);
+                    struct node *v_id_node = getchild(stmt, 1);
+                    insert_symbol(local_table, v_id_node->token, category_to_type(v_type_node->category), 0, 0, NULL, stmt);
+                } else {
+                    check_expression(stmt, local_table, global_table);
+                }
+            }
+            body_child = body_child->next;
         }
-        body_child = body_child->next;
     }
 }
 
@@ -178,6 +346,8 @@ void print_symbol_tables() {
                     p = p->next;
                 }
                 printf(")\t");
+            }else {
+                printf("\t");
             }
             
             printf("%s", type_to_string(curr_sym->type));
@@ -190,9 +360,8 @@ void print_symbol_tables() {
             curr_sym = curr_sym->next;
         }
         
-        if (curr_table->next != NULL) {
-            printf("\n");
-        }
+        printf("\n");
+        
         curr_table = curr_table->next;
     }
 }

@@ -8,6 +8,8 @@ struct node *newnode(enum category category, char *token) {
     new->category = category;
     new->token = token;
     new->type = T_NONE;
+    new->line = 0;
+    new->column = 0;
     new->children = malloc(sizeof(struct node_list));
     new->children->node = NULL;
     new->children->next = NULL;
@@ -83,7 +85,19 @@ void show(struct node *node, int depth) {
     if (node->token != NULL) {
         printf("(%s)", node->token);
     }
-    //printf(" [%d]", node->category); // DEBUG purposes
+
+    if (node->type != T_NONE) {
+        switch (node->type) {
+            case T_INT: printf(" - int"); break;
+            case T_DOUBLE: printf(" - double"); break;
+            case T_BOOLEAN: printf(" - boolean"); break;
+            case T_STRINGARRAY: printf(" - String[]"); break;
+            case T_VOID: printf(" - void"); break;
+            case T_UNDEF: printf(" - undef"); break;
+            default: break;
+        }
+    }
+
     printf("\n");
 
     struct node_list *child_ptr = node->children->next;
@@ -117,4 +131,11 @@ void free_ast(struct node *node) {
       free(node->token);
     }
   }
+}
+
+struct node *newnode_loc(enum category category, char *token, int line, int column) {
+    struct node *new = newnode(category, token);
+    new->line = line;
+    new->column = column;
+    return new;
 }
