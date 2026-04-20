@@ -14,4 +14,4 @@ clean:
 	rm -rf tests/java/**/*.out_temp
 
 zip:
-	zip jucompiler.zip jucompiler.l jucompiler.y ast.c ast.h -r
+	zip jucompiler.zip jucompiler.l jucompiler.y semantics.c semantics.h ast.c ast.h -r

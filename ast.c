@@ -87,6 +87,7 @@ void show(struct node *node, int depth) {
             case T_INT: printf(" - int"); break;
             case T_DOUBLE: printf(" - double"); break;
             case T_BOOLEAN: printf(" - boolean"); break;
+            case T_STRING: printf(" - String"); break;   
             case T_STRINGARRAY: printf(" - String[]"); break;
             case T_VOID: printf(" - void"); break;
             case T_UNDEF: printf(" - undef"); break;
@@ -131,7 +132,7 @@ void free_ast(struct node *node) {
   if (node->annotated_type != NULL) {
     free(node->annotated_type);
   }
-  free(node); 
+  free(node);
 }
 
 struct node *newnode_loc(enum category category, char *token, int line, int column) {

@@ -67,6 +67,7 @@ typedef enum {
     T_INT,
     T_DOUBLE,
     T_BOOLEAN,
+    T_STRING,        
     T_STRINGARRAY,
     T_VOID,
     T_UNDEF
@@ -98,4 +99,5 @@ void addchildren(struct node *node, struct node_list *list);
 void show(struct node *node, int depth);
 void appendlist(struct node_list *dst, struct node_list *src);
 void free_ast(struct node *node);
+
 #endif
