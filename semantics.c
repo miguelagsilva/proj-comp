@@ -188,18 +188,91 @@ void check_expression(struct node *expr, SymbolTable *local_table, SymbolTable *
             break;
         }
         case Call: {
-            struct node *id_node = getchild(expr, 0); 
+            struct node *id_node = getchild(expr, 0);
             if (id_node != NULL) {
-                Symbol *sym = search_method(global_table, id_node->token);
+                SemanticType arg_types[50];
+                int num_args = 0;
+                struct node_list *call_child = expr->children->next; 
+                struct node_list *curr_arg = call_child->next;      
                 
-                if (sym != NULL) {
-                    expr->type = sym->type;
-                    id_node->type = sym->type;
+                while (curr_arg != NULL) {
+                    arg_types[num_args++] = curr_arg->node->type;
+                    curr_arg = curr_arg->next;
+                }
+                
+                char args_str[512] = "";
+                for(int i=0; i<num_args; i++) {
+                    strcat(args_str, type_to_string(arg_types[i]));
+                    if(i < num_args - 1) strcat(args_str, ",");
+                }
+
+                Symbol *exact_match = NULL;
+                Symbol *compatible_match = NULL;
+                int exact_count = 0;
+                int compatible_count = 0;
+                
+                if (global_table != NULL) {
+                    Symbol *sym = global_table->first_symbol;
+                    while (sym != NULL) {
+                        if (sym->is_method == 1 && strcmp(sym->name, id_node->token) == 0) {
+                            int param_count = 0;
+                            ParamList *p = sym->param_types;
+                            int is_exact = 1, is_compatible = 1;
+                            
+                            while (p != NULL && param_count < num_args) {
+                                if (p->type != arg_types[param_count]) {
+                                    is_exact = 0;
+                                    if (!(p->type == T_DOUBLE && arg_types[param_count] == T_INT)) {
+                                        is_compatible = 0;
+                                    }
+                                }
+                                p = p->next;
+                                param_count++;
+                            }
+                            
+                            if (p == NULL && param_count == num_args) { 
+                                if (is_exact) {
+                                    exact_match = sym;
+                                    exact_count++;
+                                } else if (is_compatible) {
+                                    compatible_match = sym;
+                                    compatible_count++;
+                                }
+                            }
+                        }
+                        sym = sym->next;
+                    }
+                }
+                
+                Symbol *resolved = NULL;
+                if (exact_count == 1) {
+                    resolved = exact_match;
+                } else if (exact_count == 0 && compatible_count == 1) {
+                    resolved = compatible_match;
+                } else if (exact_count > 1 || compatible_count > 1) {
+                    printf("Line %d, col %d: Reference to method %s is ambiguous\n", id_node->line, id_node->column, id_node->token);
+                    semantic_errors++;
+                } else {
+                    printf("Line %d, col %d: Cannot find symbol %s(%s)\n", id_node->line, id_node->column, id_node->token, args_str);
+                    semantic_errors++;
+                }
+                
+                if (resolved != NULL) {
+                    expr->type = resolved->type;
+                    
+                    char annot[512] = "(";
+                    ParamList *p = resolved->param_types;
+                    while (p != NULL) {
+                        strcat(annot, type_to_string(p->type));
+                        if (p->next != NULL) strcat(annot, ",");
+                        p = p->next;
+                    }
+                    strcat(annot, ")");
+                    id_node->annotated_type = strdup(annot); 
+                    
                 } else {
                     expr->type = T_UNDEF;
                     id_node->type = T_UNDEF;
-                    printf("Line %d, col %d: Cannot find symbol %s\n", id_node->line, id_node->column, id_node->token);
-                    semantic_errors++;
                 }
             }
             break;
@@ -245,6 +318,35 @@ void check_expression(struct node *expr, SymbolTable *local_table, SymbolTable *
 
         case Eq: case Ne: case Lt: case Gt: case Le: case Ge: {
             expr->type = T_BOOLEAN; 
+            break;
+        }
+
+        case Return: {
+            struct node *ret_expr = getchild(expr, 0);
+            Symbol *ret_sym = search_local(local_table, "return");
+            SemanticType expected_type = ret_sym ? ret_sym->type : T_VOID;
+
+            if (ret_expr != NULL) {
+                SemanticType actual_type = ret_expr->type;
+                int compatible = 0;
+                
+                if (actual_type != T_UNDEF) {
+                    if (expected_type == actual_type) compatible = 1;
+                    else if (expected_type == T_DOUBLE && actual_type == T_INT) compatible = 1;
+                }
+                
+                if (!compatible) {
+                    printf("Line %d, col %d: Incompatible type %s in return statement\n", 
+                           ret_expr->line, ret_expr->column, type_to_string(actual_type));
+                    semantic_errors++;
+                }
+            } else {
+                if (expected_type != T_VOID) {
+                    printf("Line %d, col %d: Incompatible type void in return statement\n", 
+                           expr->line, expr->column);
+                    semantic_errors++;
+                }
+            }
             break;
         }
 

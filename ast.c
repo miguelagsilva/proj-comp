@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include "ast.h"
 
-// create a node of a given category with a given lexical symbol
 struct node *newnode(enum category category, char *token) {
     struct node *new = malloc(sizeof(struct node));
     new->category = category;
     new->token = token;
     new->type = T_NONE;
+    new->annotated_type = NULL; 
     new->line = 0;
     new->column = 0;
     new->children = malloc(sizeof(struct node_list));
@@ -16,7 +16,6 @@ struct node *newnode(enum category category, char *token) {
     return new;
 }
 
-// append a node to the list of children of the parent node
 void addchild(struct node *parent, struct node *child) {
     struct node_list *new = malloc(sizeof(struct node_list));
     new->node = child;
@@ -27,7 +26,6 @@ void addchild(struct node *parent, struct node *child) {
     children->next = new;
 }
 
-// get a pointer to a specific child, numbered 0, 1, 2, ...
 struct node *getchild(struct node *parent, int position) {
     struct node_list *children = parent->children;
     while((children = children->next) != NULL)
@@ -36,7 +34,6 @@ struct node *getchild(struct node *parent, int position) {
     return NULL;
 }
 
-// count the children of a node
 int countchildren(struct node *node) {
     int i = 0;
     while(getchild(node, i) != NULL)
@@ -44,7 +41,6 @@ int countchildren(struct node *node) {
     return i;
 }
 
-// create an empty list
 struct node_list *newlist() {
     struct node_list *new = malloc(sizeof(struct node_list));
     new->node = NULL;
@@ -52,7 +48,6 @@ struct node_list *newlist() {
     return new;
 }
 
-// append a node to a list of nodes
 void append(struct node_list *list, struct node *node) {
     struct node_list *new = malloc(sizeof(struct node_list));
     new->node = node;
@@ -62,7 +57,6 @@ void append(struct node_list *list, struct node *node) {
     list->next = new;
 }
 
-// append a list of nodes as children of the given node
 void addchildren(struct node *node, struct node_list *list) {
     struct node_list *children = node->children;
     while(children->next != NULL)
@@ -86,7 +80,9 @@ void show(struct node *node, int depth) {
         printf("(%s)", node->token);
     }
 
-    if (node->type != T_NONE) {
+    if (node->annotated_type != NULL) {
+        printf(" - %s", node->annotated_type);
+    } else if (node->type != T_NONE) {
         switch (node->type) {
             case T_INT: printf(" - int"); break;
             case T_DOUBLE: printf(" - double"); break;
@@ -108,7 +104,7 @@ void show(struct node *node, int depth) {
 }
 
 void appendlist(struct node_list *dst, struct node_list *src) {
-    struct node_list *cur = src->next;  // skip sentinel head
+    struct node_list *cur = src->next;  
     while (cur != NULL) {
         append(dst, cur->node);
         cur = cur->next;
@@ -127,10 +123,15 @@ void free_ast(struct node *node) {
     struct node_list *temp = child;
     child = child->next;
     free(temp);
-    if (node->token != NULL) {
-      free(node->token);
-    }
   }
+  
+  if (node->token != NULL) {
+    free(node->token);
+  }
+  if (node->annotated_type != NULL) {
+    free(node->annotated_type);
+  }
+  free(node); 
 }
 
 struct node *newnode_loc(enum category category, char *token, int line, int column) {

@@ -76,6 +76,7 @@ struct node {
     enum category category;
     char *token;
     SemanticType type;
+    char *annotated_type;
     int line;
     int column;
     struct node_list *children;
